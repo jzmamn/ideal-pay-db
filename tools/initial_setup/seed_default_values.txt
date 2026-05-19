@@ -1,0 +1,253 @@
+-- =====================================================
+-- Disable foreign key checks
+SET FOREIGN_KEY_CHECKS = 0;
+-- =====================================================
+
+
+-- =====================================================
+-- usr
+-- =====================================================
+
+INSERT INTO usr
+(id, code, name, password, role_id, is_active, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'System User', 'SYSTEM', -1, 'Y', -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- user_role
+-- =====================================================
+
+INSERT INTO user_role
+(id, code, name, is_active, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Role', 'Y', -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- branch
+-- =====================================================
+
+INSERT INTO branch
+(id, code, name, is_active, description, location, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Branch', 'Y', 'System Default Branch', 'N/A', -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- company
+-- =====================================================
+
+INSERT INTO company
+(id, code, name, is_active, contact_person, address_line1, address_line2, city,
+ address_email, telephone, fax, email, logo,
+ created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Company', 'Y',
+ 'System', 'N/A', 'N/A', 'N/A',
+ 'system@local', '0000000000', 'N/A', 'system@local', 'N/A',
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- department
+-- =====================================================
+
+INSERT INTO department
+(id, code, name, is_active, description, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Department', 'Y', 'System Default Department',
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- designation
+-- =====================================================
+
+INSERT INTO designation
+(id, code, name, is_active, description, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Designation', 'Y', 'System Default Designation',
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- emp_type
+-- =====================================================
+
+INSERT INTO emp_type
+(id, code, name, is_active, description, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Employee Type', 'Y', 'System Default Employee Type',
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- grade
+-- =====================================================
+
+INSERT INTO grade
+(id, code, name, is_active, amount, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Grade', 'Y', 0.00,
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- job_category
+-- =====================================================
+
+INSERT INTO job_category
+(id, code, name, is_active, description, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Job Category', 'Y', 'System Default Job Category',
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- nopay_days
+-- =====================================================
+
+INSERT INTO nopay_days
+(id, code, name, is_active, description, days, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default NoPay', 'Y', 'System Default NoPay Rule', 0,
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- overtime
+-- =====================================================
+
+INSERT INTO overtime
+(id, code, name, is_active, description, amount, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Overtime', 'Y', 'System Default Overtime', 0.00,
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- loan
+-- =====================================================
+
+INSERT INTO loan
+(id, code, name, is_active, description, amount, created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Loan', 'Y', 'System Default Loan', 0.00,
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- fixed_allowance
+-- =====================================================
+
+INSERT INTO fixed_allowance
+(id, code, name, description, amount, is_taxable, is_active,
+ liable_for_epf, liable_for_etf, liable_for_paye, liable_no_pay,
+ created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Fixed Allowance', 'System Default Fixed Allowance',
+ 0.00, 'N', 'Y',
+ 'N', 'N', 'N', 'N',
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- fixed_deduction
+-- =====================================================
+
+INSERT INTO fixed_deduction
+(id, code, name, description, amount, is_active, is_taxable,
+ liable_for_epf, liable_for_etf, liable_for_paye, liable_no_pay,
+ created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Fixed Deduction', 'System Default Fixed Deduction',
+ 0.00, 'Y', 'N',
+ 'N', 'N', 'N', 'N',
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- variable_allowance
+-- =====================================================
+
+INSERT INTO variable_allowance
+(id, code, name, is_active,
+ liable_for_epf, liable_for_etf, liable_for_paye, liable_no_pay,
+ created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Variable Allowance', 'Y',
+ 'N', 'N', 'N', 'N',
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- variable_deduction
+-- =====================================================
+
+INSERT INTO variable_deduction
+(id, code, name, is_active,
+ liable_for_epf, liable_for_etf, liable_for_paye, liable_no_pay,
+ created_by, created_date, modified_by, modified_date)
+VALUES
+(-1, 'DEFAULT', 'Default Variable Deduction', 'Y',
+ 'N', 'N', 'N', 'N',
+ -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP);
+
+
+-- =====================================================
+-- employee
+-- =====================================================
+
+INSERT INTO employee
+(id, employee_no, first_name, last_name, payroll_name,
+ email, phone, joined_date, is_active,
+ notes, remarks, epf_no, etf_no, basic_salary,
+ employee_type_id, nopay_days_id, job_category_id,
+ designation_id, branch_id, grade_id,
+ adrs_line1, adrs_line2, city, district, country,
+ contact_person, cp_address, cp_contact_number,
+ created_by, created_date, modified_by, modified_date)
+VALUES
+(
+ -1, 'DEFAULT', 'System', 'Employee', 'System Employee', 'system@local', '0000000000',
+ CURDATE(), 'Y', 'System Default Employee', 'Default Record', 'N/A', 'N/A', 0.00,
+ -1, -1, -1, -1, -1, -1, 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', -1,
+ CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP
+);
+
+
+
+-- =====================================================
+-- emp_fa DEFAULT ROW
+-- =====================================================
+
+INSERT INTO emp_fa
+(
+    id, emp_id, fa_id, amount, payroll_month, is_processed, processed_date, created_by,
+    created_date, modified_by, modified_date)
+VALUES
+(
+    -1, -1, -1, 0.00, 'MMYYYY', FALSE, NULL, -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP
+);
+
+
+-- =====================================================
+-- emp_fd DEFAULT ROW
+-- =====================================================
+
+INSERT INTO emp_fd
+(
+    id, emp_id, fd_id, amount, payroll_month, is_processed, processed_date, created_by,
+    created_date, modified_by, modified_date
+)
+VALUES
+(
+    -1, -1, -1, 0.00, 'MMYYYY', FALSE, NULL, -1,
+    CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP
+);
+
+-- =====================================================
+-- Re-enable foreign key checks
+SET FOREIGN_KEY_CHECKS = 1;
+-- =====================================================

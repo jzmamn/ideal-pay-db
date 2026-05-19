@@ -1,0 +1,83 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE salary;
+
+TRUNCATE TABLE employee;
+INSERT INTO `employee` (
+  `id`,
+  `employee_no`,
+  `first_name`,
+  `last_name`,
+  `payroll_name`,
+  `email`,
+  `phone`,
+  `joined_date`,
+  `is_active`,
+  `notes`,
+  `remarks`,
+  `epf_no`,
+  `etf_no`,
+  `basic_salary`,
+  `employee_type_id`,
+  `nopay_days_id`,
+  `job_category_id`,
+  `designation_id`,
+  `branch_id`,
+  `grade_id`,
+  `adrs_line1`,
+  `adrs_line2`,
+  `city`,
+  `district`,
+  `country`,
+  `contact_person`,
+  `cp_address`,
+  `cp_contact_number`,
+  `created_by`,
+  `created_date`,
+  `modified_by`,
+  `modified_date`
+)
+VALUES (
+  -1,
+  'EMP0000',
+  'System',
+  'User',
+  'System User',
+  NULL,
+  NULL,
+  CURDATE(),
+  'Y',
+  'Default system employee record',
+  'Used for system references',
+  NULL,
+  NULL,
+  0.00,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  'System Address Line 1',
+  NULL,
+  'Colombo',
+  'Colombo',
+  'Sri Lanka',
+  'Admin',
+  NULL,
+  NULL,
+  0,
+  CURRENT_TIMESTAMP,
+  0,
+  CURRENT_TIMESTAMP
+);
+
+
+
+
+TRUNCATE TABLE branch;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+ALTER TABLE branch AUTO_INCREMENT = 0;

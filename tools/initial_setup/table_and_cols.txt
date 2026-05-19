@@ -1,0 +1,7 @@
+SELECT 
+    table_name,
+    GROUP_CONCAT(column_name ORDER BY ordinal_position) AS columns
+FROM information_schema.columns
+WHERE table_schema = 'ideal_pay'
+GROUP BY table_name
+ORDER BY table_name;
