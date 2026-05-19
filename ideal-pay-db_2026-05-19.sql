@@ -164,7 +164,7 @@ CREATE TABLE `designation` (
 
 LOCK TABLES `designation` WRITE;
 /*!40000 ALTER TABLE `designation` DISABLE KEYS */;
-INSERT INTO `designation` VALUES (-1,'DEFAULT','Default Designation','Y','System Default Designation',-1,'2026-05-17 12:34:46',-1,'2026-05-17 12:34:46'),(1,'DS001','Software Engineer','Y','Software Engineer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(2,'DS002','Senior Engineer','Y','Senior Engineer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(3,'DS003','Team Lead','Y','Team Lead',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(4,'DS004','HR Executive','Y','HR Executive',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(5,'DS005','Accountant','Y','Accountant',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(6,'DS006','Payroll Officer','Y','Payroll Officer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(7,'DS007','Manager','Y','Manager',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(8,'DS008','Director','Y','Director',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(9,'DS009','Clerk','Y','Clerk',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(10,'DS010','QA Engineer','Y','QA Engineer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(11,'DS011','Support Engineer','Y','Support Engineer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49');
+INSERT INTO `designation` VALUES (-1,'DEFAULT','Default Designation','Y','System Default Designation',-1,'2026-05-17 12:34:46',-1,'2026-05-17 12:34:46'),(1,'DS001','Software Engineer','Y','Software Engineer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(2,'DS002','Senior Engineer','Y','Senior Engineer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(3,'DS003','Team Lead','N','Team Lead',1,'2026-05-17 13:34:49',1,'2026-05-19 04:09:29'),(4,'DS004','HR Executive','Y','HR Executive',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(5,'DS005','Accountant','N','Accountant',1,'2026-05-17 13:34:49',1,'2026-05-19 04:09:29'),(6,'DS006','Payroll Officer','Y','Payroll Officer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(7,'DS007','Manager','Y','Manager',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(8,'DS008','Director','Y','Director',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(9,'DS009','Clerk','Y','Clerk',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(10,'DS010','QA Engineer','Y','QA Engineer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49'),(11,'DS011','Support Engineer','Y','Support Engineer',1,'2026-05-17 13:34:49',1,'2026-05-17 13:34:49');
 /*!40000 ALTER TABLE `designation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,22 +298,23 @@ CREATE TABLE `employee` (
   `employee_no` varchar(20) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `payroll_name` varchar(150) NOT NULL,
-  `email` varchar(150) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `joined_date` date NOT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `nic` varchar(15) DEFAULT NULL,
   `is_active` char(1) NOT NULL DEFAULT 'Y',
-  `notes` varchar(500) DEFAULT NULL,
   `remarks` varchar(500) DEFAULT NULL,
+  `payroll_name` varchar(150) NOT NULL,
   `epf_no` varchar(50) DEFAULT NULL,
   `etf_no` varchar(50) DEFAULT NULL,
   `basic_salary` decimal(10,2) DEFAULT '0.00',
+  `joined_date` date NOT NULL,
   `employee_type_id` bigint NOT NULL,
   `nopay_days_id` bigint NOT NULL,
   `job_category_id` bigint NOT NULL,
   `designation_id` bigint NOT NULL,
   `branch_id` bigint NOT NULL,
   `grade_id` bigint NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `email` varchar(150) DEFAULT NULL,
   `adrs_line1` varchar(255) DEFAULT NULL,
   `adrs_line2` varchar(255) DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
@@ -354,7 +355,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (-1,'DEFAULT','System','Employee','System Employee','system@local','0000000000','2026-05-17','Y','System Default Employee','Default Record','N/A','N/A',0.00,-1,-1,-1,-1,-1,-1,'N/A','N/A','N/A','N/A','N/A','N/A','N/A','N/A',-1,'2026-05-17 12:34:46',-1,'2026-05-17 12:34:46');
+INSERT INTO `employee` VALUES (-1,'DEFAULT','System','Employee',NULL,NULL,'Y','Default Record','System Employee','N/A','N/A',0.00,'2026-05-17',-1,-1,-1,-1,-1,-1,'0000000000','system@local','N/A','N/A','N/A','N/A','N/A','N/A','N/A','N/A',-1,'2026-05-17 12:34:46',-1,'2026-05-17 12:34:46');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1031,4 +1032,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-19  7:22:45
+-- Dump completed on 2026-05-19 14:12:05
