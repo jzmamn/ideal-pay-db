@@ -247,6 +247,71 @@ VALUES
     CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP
 );
 
+
+-- =====================================================
+-- emp_va DEFAULT ROW
+-- =====================================================
+
+INSERT INTO emp_va
+(
+    id, emp_id, va_id, amount, payroll_month, is_processed, processed_date,
+    created_by, created_date, modified_by, modified_date
+)
+VALUES
+(
+    -1, -1, -1, 0.00, NULL, 'N', NULL,    
+    -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP
+);
+
+
+-- =====================================================
+-- emp_vd DEFAULT ROW
+-- =====================================================
+
+INSERT INTO emp_vd
+(
+    id, emp_id, vd_id, amount, payroll_month, is_processed, processed_date,
+    created_by, created_date, modified_by, modified_date
+)
+VALUES
+(
+    -1, -1, -1, 0.00, NULL, 'N', NULL,    
+    -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP
+);
+
+
+-- =====================================================
+-- emp_np DEFAULT ROW
+-- =====================================================
+
+INSERT INTO emp_np
+(
+    id, emp_id, nopay_id, days, amount, payroll_month, is_processed, processed_date,
+    created_by, created_date, modified_by, modified_date
+)
+VALUES
+(
+    -1, -1, -1, 0.00, 0.00, NULL, 'N', NULL,
+    -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP
+);
+
+
+-- =====================================================
+-- emp_ot DEFAULT ROW
+-- =====================================================
+
+INSERT INTO emp_ot
+(
+    id, emp_id, overtime_id, hours, amount, payroll_month, is_processed, processed_date,
+    created_by, created_date, modified_by, modified_date
+)
+VALUES
+(
+    -1, -1, -1, 0.00, 0.00, NULL, 'N', NULL,    
+    -1, CURRENT_TIMESTAMP, -1, CURRENT_TIMESTAMP
+);
+
+
 -- =====================================================
 -- Re-enable foreign key checks
 SET FOREIGN_KEY_CHECKS = 1;
