@@ -1790,11 +1790,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_payroll_monthly_summary`(
     IN p_payroll_month VARCHAR(20)
 )
 BEGIN
-
     SELECT
         e.employee_no AS Employee,
         e.basic_salary AS Basic,
-
         /* =========================
            TOTAL ALLOWANCES (FA + VA)
         ========================= */
@@ -1802,22 +1800,20 @@ BEGIN
             IFNULL((SELECT SUM(ef.amount)
                     FROM emp_fa ef
                     WHERE ef.emp_id = e.id
-                    AND ef.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                    AND ef.payroll_month = p_payroll_month),0)
             +
             IFNULL((SELECT SUM(eva.amount)
                     FROM emp_va eva
                     WHERE eva.emp_id = e.id
-                    AND eva.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                    AND eva.payroll_month = p_payroll_month),0)
         ) AS Allowances,
-
         /* =========================
            OVERTIME
         ========================= */
         IFNULL((SELECT SUM(eot.amount)
                 FROM emp_ot eot
                 WHERE eot.emp_id = e.id
-                AND eot.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0) AS OT,
-
+                AND eot.payroll_month = p_payroll_month),0) AS OT,
         /* =========================
            GROSS
         ========================= */
@@ -1827,19 +1823,18 @@ BEGIN
             IFNULL((SELECT SUM(ef.amount)
                     FROM emp_fa ef
                     WHERE ef.emp_id = e.id
-                    AND ef.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                    AND ef.payroll_month = p_payroll_month),0)
             +
             IFNULL((SELECT SUM(eva.amount)
                     FROM emp_va eva
                     WHERE eva.emp_id = e.id
-                    AND eva.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                    AND eva.payroll_month = p_payroll_month),0)
             +
             IFNULL((SELECT SUM(eot.amount)
                     FROM emp_ot eot
                     WHERE eot.emp_id = e.id
-                    AND eot.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                    AND eot.payroll_month = p_payroll_month),0)
         ) AS Gross,
-
         /* =========================
            DEDUCTIONS
         ========================= */
@@ -1847,19 +1842,18 @@ BEGIN
             IFNULL((SELECT SUM(efd.amount)
                     FROM emp_fd efd
                     WHERE efd.emp_id = e.id
-                    AND efd.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                    AND efd.payroll_month = p_payroll_month),0)
             +
             IFNULL((SELECT SUM(evd.amount)
                     FROM emp_vd evd
                     WHERE evd.emp_id = e.id
-                    AND evd.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                    AND evd.payroll_month = p_payroll_month),0)
             +
             IFNULL((SELECT SUM(enp.amount)
                     FROM emp_np enp
                     WHERE enp.emp_id = e.id
-                    AND enp.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                    AND enp.payroll_month = p_payroll_month),0)
         ) AS Deductions,
-
         /* =========================
            NET
         ========================= */
@@ -1870,41 +1864,39 @@ BEGIN
                 IFNULL((SELECT SUM(ef.amount)
                         FROM emp_fa ef
                         WHERE ef.emp_id = e.id
-                        AND ef.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                        AND ef.payroll_month = p_payroll_month),0)
                 +
                 IFNULL((SELECT SUM(eva.amount)
                         FROM emp_va eva
                         WHERE eva.emp_id = e.id
-                        AND eva.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                        AND eva.payroll_month = p_payroll_month),0)
                 +
                 IFNULL((SELECT SUM(eot.amount)
                         FROM emp_ot eot
                         WHERE eot.emp_id = e.id
-                        AND eot.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                        AND eot.payroll_month = p_payroll_month),0)
             )
             -
             (
                 IFNULL((SELECT SUM(efd.amount)
                         FROM emp_fd efd
                         WHERE efd.emp_id = e.id
-                        AND efd.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                        AND efd.payroll_month = p_payroll_month),0)
                 +
                 IFNULL((SELECT SUM(evd.amount)
                         FROM emp_vd evd
                         WHERE evd.emp_id = e.id
-                        AND evd.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                        AND evd.payroll_month = p_payroll_month),0)
                 +
                 IFNULL((SELECT SUM(enp.amount)
                         FROM emp_np enp
                         WHERE enp.emp_id = e.id
-                        AND enp.payroll_month = p_payroll_month COLLATE utf8mb4_0900_ai_ci),0)
+                        AND enp.payroll_month = p_payroll_month),0)
             )
         ) AS Net
-
     FROM employee e
     WHERE e.is_active = 'Y'
     ORDER BY e.id;
-
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2073,65 +2065,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_tool_reset_all_tables` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tool_reset_all_tables`(IN db_name VARCHAR(64))
-BEGIN
-
-    DECLARE done INT DEFAULT 0;
-    DECLARE tbl VARCHAR(255);
-
-    DECLARE cur CURSOR FOR 
-        SELECT table_name
-        FROM information_schema.tables
-        WHERE table_schema = db_name
-          AND table_type = 'BASE TABLE';
-
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
-
-    -- Disable FK checks
-    SET FOREIGN_KEY_CHECKS = 0;
-
-    OPEN cur;
-
-    read_loop: LOOP
-        FETCH cur INTO tbl;
-
-        IF done THEN
-            LEAVE read_loop;
-        END IF;
-
-        -- Skip system tables (optional filter)
-        IF tbl NOT IN ('usr') THEN
-
-            SET @sql = CONCAT('TRUNCATE TABLE `', db_name, '`.`', tbl, '`');
-            PREPARE stmt FROM @sql;
-            EXECUTE stmt;
-            DEALLOCATE PREPARE stmt;
-
-        END IF;
-
-    END LOOP;
-
-    CLOSE cur;
-
-    -- Re-enable FK checks
-    SET FOREIGN_KEY_CHECKS = 1;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2142,4 +2075,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-26 16:18:58
+-- Dump completed on 2026-05-26 16:56:00
