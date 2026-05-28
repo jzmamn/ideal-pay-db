@@ -313,6 +313,20 @@ VALUES
 
 
 -- =====================================================
+-- status DEFAULT ROW
+-- =====================================================
+
+
+INSERT INTO `status` (
+    `id`, `code`, `name`, `date_only`, `date_range`, `is_active`, `description`,   
+    `created_by`, `modified_by`) 
+    VALUES (
+    -1, 'DEF', 'Default', 'N', 'N', 'Y', 'Default system status record',
+    -1, -1
+);
+
+
+-- =====================================================
 -- Re-enable foreign key checks
 SET FOREIGN_KEY_CHECKS = 1;
 -- =====================================================
