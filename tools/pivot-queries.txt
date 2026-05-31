@@ -1,0 +1,31 @@
+-- ── Fixed Allowance Pivot ─────────────────────────────────────────────────
+CALL sp_emp_fa_pivot('2026-01');
+CALL sp_emp_fa_pivot('2026-02');
+
+-- ── Fixed Deduction Pivot ─────────────────────────────────────────────────
+CALL sp_emp_fd_pivot('2026-01');
+CALL sp_emp_fd_pivot('2026-02');
+
+-- ── Variable Allowance Pivot ──────────────────────────────────────────────
+CALL sp_emp_va_pivot('2026-01');
+CALL sp_emp_va_pivot('2026-02');
+
+-- ── Variable Deduction Pivot ──────────────────────────────────────────────
+CALL sp_emp_vd_pivot('2026-01');
+CALL sp_emp_vd_pivot('2026-02');
+
+-- ── Overtime Pivot ────────────────────────────────────────────────────────
+CALL sp_emp_ot_pivot('2026-01');
+CALL sp_emp_ot_pivot('2026-02');
+
+-- ── NoPay Pivot ───────────────────────────────────────────────────────────
+CALL sp_emp_np_pivot('2026-01');
+CALL sp_emp_np_pivot('2026-02');
+
+-- ── Empty month (tests NULL guard — should return all employees with 0s) ──
+CALL sp_emp_fa_pivot('2026-05');
+CALL sp_emp_fd_pivot('2026-05');
+CALL sp_emp_va_pivot('2026-05');
+CALL sp_emp_vd_pivot('2026-05');
+CALL sp_emp_ot_pivot('2026-05');
+CALL sp_emp_np_pivot('2026-05');
