@@ -161,35 +161,42 @@ INSERT INTO `company` VALUES (-1,'DEFAULT','Default Company','Y','System','N/A',
 UNLOCK TABLES;
 
 --
--- Table structure for table `countries`
+-- Table structure for table `country`
 --
 
-DROP TABLE IF EXISTS `countries`;
+DROP TABLE IF EXISTS `country`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `countries` (
+CREATE TABLE `country` (
   `id` bigint NOT NULL AUTO_INCREMENT,
+  `code` varchar(10) DEFAULT NULL,
   `name` varchar(70) NOT NULL DEFAULT '',
+  `is_active` char(1) DEFAULT 'Y',
   `iso2` char(2) NOT NULL DEFAULT '',
   `iso3` char(3) NOT NULL,
   `phone_code` bigint NOT NULL,
-  `postcode_required` char(1) NOT NULL DEFAULT '0',
-  `is_eu` char(1) NOT NULL DEFAULT '0',
-  `code` varchar(10) DEFAULT NULL,
+  `created_by` bigint NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_by` bigint NOT NULL,
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `iso2` (`iso2`),
-  UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `code` (`code`),
+  KEY `fk_countries_created_by` (`created_by`),
+  KEY `fk_countries_modified_by` (`modified_by`),
+  CONSTRAINT `fk_countries_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
+  CONSTRAINT `fk_countries_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `usr` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=196 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `countries`
+-- Dumping data for table `country`
 --
 
-LOCK TABLES `countries` WRITE;
-/*!40000 ALTER TABLE `countries` DISABLE KEYS */;
-INSERT INTO `countries` VALUES (-1,'Default Country','DF','DEF',0,'0','0','DF'),(1,'Andorra','AD','AND',376,'0','0','AD'),(2,'Birleşik Arap Emirlikleri','AE','ARE',971,'0','0','AE'),(3,'Afganistan','AF','AFG',93,'0','0','AF'),(4,'Antigua ve Barbuda','AG','ATG',1268,'0','0','AG'),(5,'Anguilla','AI','AIA',1264,'0','0','AI'),(6,'Arnavutluk','AL','ALB',355,'0','0','AL'),(7,'Ermenistan','AM','ARM',374,'0','0','AM'),(8,'Angola','AO','AGO',244,'0','0','AO'),(9,'Antarktika','AQ','ATA',672,'0','0','AQ'),(10,'Arjantin','AR','ARG',54,'0','0','AR'),(11,'Amerikan Samoası','AS','ASM',1684,'0','0','AS'),(12,'Avusturya','AT','AUT',43,'0','1','AT'),(13,'Avustralya','AU','AUS',61,'0','0','AU'),(14,'Aruba','AW','ABW',297,'0','0','AW'),(15,'Åland Adaları','AX','ALA',0,'0','0','AX'),(16,'Azerbaycan','AZ','AZE',994,'0','0','AZ'),(17,'Bosna Hersek','BA','BIH',387,'0','0','BA'),(18,'Barbados','BB','BRB',1246,'0','0','BB'),(19,'Bangladeş','BD','BGD',880,'0','0','BD'),(20,'Belçika','BE','BEL',32,'0','1','BE'),(21,'Burkina Faso','BF','BFA',226,'0','0','BF'),(22,'Bulgaristan','BG','BGR',359,'0','1','BG'),(23,'Bahreyn','BH','BHR',973,'0','0','BH'),(24,'Burundi','BI','BDI',257,'0','0','BI'),(25,'Benin','BJ','BEN',229,'0','0','BJ'),(26,'Saint Barthélemy','BL','BLM',0,'0','0','BL'),(27,'Bermuda','BM','BMU',1441,'0','0','BM'),(28,'Brunei Darussalam','BN','BRN',673,'0','0','BN'),(29,'Bolivya','BO','BOL',591,'0','0','BO'),(30,'Bonaire, Sint Eustatius ve Saba','BQ','BES',0,'0','0','BQ'),(31,'Brezilya','BR','BRA',55,'0','0','BR'),(32,'Bahamalar','BS','BHS',1242,'0','0','BS'),(33,'Butan','BT','BTN',975,'0','0','BT'),(34,'Bouvet Adası','BV','BVT',44,'0','0','BV'),(35,'Botsvana','BW','BWA',267,'0','0','BW'),(36,'Beyaz Rusya','BY','BLR',375,'0','0','BY'),(37,'Belize','BZ','BLZ',501,'0','0','BZ'),(38,'Kanada','CA','CAN',1,'0','0','CA'),(39,'Cocos (Keeling) Adaları','CC','CCK',61,'0','0','CC'),(40,'Kongo (Demokratik Cumhuriyeti)','CD','COD',243,'0','0','CD'),(41,'Orta Afrika Cumhuriyeti','CF','CAF',236,'0','0','CF'),(42,'Kongo','CG','COG',242,'0','0','CG'),(43,'İsviçre','CH','CHE',41,'0','0','CH'),(44,'Fildişi Sahili','CI','CIV',225,'0','0','CI'),(45,'Cook Adaları','CK','COK',682,'0','0','CK'),(46,'Şili','CL','CHL',56,'0','0','CL'),(47,'Kamerun','CM','CMR',237,'0','0','CM'),(48,'Çin','CN','CHN',86,'0','0','CN'),(49,'Kolombiya','CO','COL',57,'0','0','CO'),(50,'Kosta Rika','CR','CRI',506,'0','0','CR'),(51,'Küba','CU','CUB',53,'0','0','CU'),(52,'Cape Verde','CV','CPV',238,'0','0','CV'),(53,'Curaçao','CW','CUW',0,'0','0','CW'),(54,'Noel Adası','CX','CXR',61,'0','0','CX'),(55,'Kıbrıs','CY','CYP',357,'0','1','CY'),(56,'Çek Cumhuriyeti','CZ','CZE',420,'0','1','CZ'),(57,'Almanya','DE','DEU',49,'0','1','DE'),(58,'Cibuti','DJ','DJI',253,'0','0','DJ'),(59,'Danimarka','DK','DNK',45,'0','1','DK'),(60,'Dominika','DM','DMA',1767,'0','0','DM'),(61,'Dominik Cumhuriyeti','DO','DOM',1809,'0','0','DO'),(62,'Cezayir','DZ','DZA',213,'0','0','DZ'),(63,'Ekvador','EC','ECU',593,'0','0','EC'),(64,'Estonya','EE','EST',372,'0','1','EE'),(65,'Mısır','EG','EGY',20,'0','0','EG'),(66,'Batı Sahra','EH','ESH',0,'0','0','EH'),(67,'Eritre','ER','ERI',291,'0','0','ER'),(68,'İspanya','ES','ESP',34,'0','1','ES'),(69,'Etiyopya','ET','ETH',251,'0','0','ET'),(70,'Finlandiya','FI','FIN',358,'0','1','FI'),(71,'Fiji','FJ','FJI',679,'0','0','FJ'),(72,'Falkland Adaları (Malvinas)','FK','FLK',500,'0','0','FK'),(73,'Mikronezya (Federal Devletler)','FM','FSM',691,'0','0','FM'),(74,'Faroe Adaları','FO','FRO',298,'0','0','FO'),(75,'Fransa','FR','FRA',33,'0','1','FR'),(76,'Gabon','GA','GAB',241,'0','0','GA'),(77,'Birleşik Krallık','GB','GBR',44,'1','1','GB'),(78,'Grenada','GD','GRD',1473,'0','0','GD'),(79,'Gürcistan','GE','GEO',995,'0','0','GE'),(80,'Fransız Guyanası','GF','GUF',594,'0','0','GF'),(81,'Guernsey','GG','GGY',0,'0','0','GG'),(82,'Gana','GH','GHA',233,'0','0','GH'),(83,'Cebelitarık','GI','GIB',350,'0','0','GI'),(84,'Grönland','GL','GRL',299,'0','0','GL'),(85,'Gambiya','GM','GMB',220,'0','0','GM'),(86,'Gine','GN','GIN',224,'0','0','GN'),(87,'Guadeloupe','GP','GLP',590,'0','0','GP'),(88,'Ekvator Ginesi','GQ','GNQ',240,'0','0','GQ'),(89,'Yunanistan','GR','GRC',30,'0','1','GR'),(90,'Güney Georgia ve Güney Sandwich Adaları','GS','SGS',44,'0','0','GS'),(91,'Guatemala','GT','GTM',502,'0','0','GT'),(92,'Guam','GU','GUM',1671,'0','0','GU'),(93,'Gine-Bissau','GW','GNB',245,'0','0','GW'),(94,'Guyana','GY','GUY',592,'0','0','GY'),(95,'Hong Kong','HK','HKG',852,'0','0','HK'),(96,'Heard Adası ve McDonald Adaları','HM','HMD',44,'0','0','HM'),(97,'Honduras','HN','HND',504,'0','0','HN'),(98,'Hırvatistan (Hrvatska)','HR','HRV',385,'0','1','HR'),(99,'Haiti','HT','HTI',509,'0','0','HT'),(100,'Macaristan','HU','HUN',36,'0','1','HU'),(101,'Endonezya','ID','IDN',62,'0','0','ID'),(102,'İrlanda','IE','IRL',353,'0','1','IE'),(103,'İsrail','IL','ISR',972,'0','0','IL'),(104,'Man Adası','IM','IMN',0,'0','0','IM'),(105,'Hindistan','IN','IND',91,'0','0','IN'),(106,'İngiliz Hint Okyanusu Bölgesi','IO','IOT',0,'0','0','IO'),(107,'Irak','IQ','IRQ',964,'0','0','IQ'),(108,'İran (İslam Cumhuriyeti)','IR','IRN',98,'0','0','IR'),(109,'İzlanda','IS','ISL',354,'0','0','IS'),(110,'İtalya','IT','ITA',39,'0','1','IT'),(111,'Jersey','JE','JEY',0,'0','1','JE'),(112,'Jamaika','JM','JAM',1876,'0','0','JM'),(113,'Ürdün','JO','JOR',962,'0','0','JO'),(114,'Japonya','JP','JPN',81,'0','0','JP'),(115,'Kenya','KE','KEN',254,'0','0','KE'),(116,'Kırgızistan','KG','KGZ',996,'0','0','KG'),(117,'Kamboçya','KH','KHM',855,'0','0','KH'),(118,'Kiribati','KI','KIR',686,'0','0','KI'),(119,'Komorlar','KM','COM',269,'0','0','KM'),(120,'Saint Kitts ve Nevis','KN','KNA',1869,'0','0','KN'),(121,'Kore (Demokratik Halk Cumhuriyeti)','KP','PRK',850,'0','0','KP'),(122,'Kore (Cumhuriyeti)','KR','KOR',82,'0','0','KR'),(123,'Kuveyt','KW','KWT',965,'0','0','KW'),(124,'Cayman Adaları','KY','CYM',1345,'0','0','KY'),(125,'Kazakistan','KZ','KAZ',7,'0','0','KZ'),(126,'Lao Halk Demokratik Cumhuriyeti','LA','LAO',856,'0','0','LA'),(127,'Lübnan','LB','LBN',961,'0','0','LB'),(128,'Saint Lucia','LC','LCA',1758,'0','0','LC'),(129,'Lihtenştayn','LI','LIE',423,'0','0','LI'),(130,'Sri Lanka','LK','LKA',94,'0','0','LK'),(131,'Liberya','LR','LBR',231,'0','0','LR'),(132,'Lesotho','LS','LSO',266,'0','0','LS'),(133,'Litvanya','LT','LTU',370,'0','1','LT'),(134,'Lüksemburg','LU','LUX',352,'0','1','LU'),(135,'Letonya','LV','LVA',371,'0','1','LV'),(136,'Libya','LY','LBY',218,'0','0','LY'),(137,'Fas','MA','MAR',212,'0','0','MA'),(138,'Monako','MC','MCO',377,'0','0','MC'),(139,'Moldova (Cumhuriyeti)','MD','MDA',373,'0','0','MD'),(140,'Karadağ','ME','MNE',382,'0','0','ME'),(141,'Saint Martin (Fransız kısmı)','MF','MAF',0,'0','0','MF'),(142,'Madagaskar','MG','MDG',261,'0','0','MG'),(143,'Marshall Adaları','MH','MHL',692,'0','0','MH'),(144,'Makedonya','MK','MKD',389,'0','0','MK'),(145,'Mali','ML','MLI',223,'0','0','ML'),(146,'Myanmar','MM','MMR',95,'0','0','MM'),(147,'Moğolistan','MN','MNG',976,'0','0','MN'),(148,'Makau','MO','MAC',853,'0','0','MO'),(149,'Kuzey Mariana Adaları','MP','MNP',1670,'0','0','MP'),(150,'Martinik','MQ','MTQ',596,'0','0','MQ'),(151,'Moritanya','MR','MRT',222,'0','0','MR'),(152,'Montserrat','MS','MSR',1664,'0','0','MS'),(153,'Malta','MT','MLT',356,'0','1','MT'),(154,'Mauritius','MU','MUS',230,'0','0','MU'),(155,'Maldivler','MV','MDV',960,'0','0','MV'),(156,'Malavi','MW','MWI',265,'0','0','MW'),(157,'Meksika','MX','MEX',52,'0','0','MX'),(158,'Malezya','MY','MYS',60,'0','0','MY'),(159,'Mozambik','MZ','MOZ',258,'0','0','MZ'),(160,'Namibya','NA','NAM',264,'0','0','NA'),(161,'Yeni Kaledonya','NC','NCL',687,'0','0','NC'),(162,'Nijer','NE','NER',227,'0','0','NE'),(163,'Norfolk Adası','NF','NFK',672,'0','0','NF'),(164,'Nijerya','NG','NGA',234,'0','0','NG'),(165,'Nikaragua','NI','NIC',505,'0','0','NI'),(166,'Hollanda','NL','NLD',31,'0','1','NL'),(167,'Norveç','NO','NOR',47,'0','0','NO'),(168,'Nepal','NP','NPL',977,'0','0','NP'),(169,'Nauru','NR','NRU',674,'0','0','NR'),(170,'Niue','NU','NIU',683,'0','0','NU'),(171,'Yeni Zelanda','NZ','NZL',64,'0','0','NZ'),(172,'Umman','OM','OMN',968,'0','0','OM'),(173,'Panama','PA','PAN',507,'0','0','PA'),(174,'Peru','PE','PER',51,'0','0','PE'),(175,'Fransız Polinezyası','PF','PYF',689,'0','0','PF'),(176,'Papua Yeni Gine','PG','PNG',675,'0','0','PG'),(177,'Filipinler','PH','PHL',63,'0','0','PH'),(178,'Pakistan','PK','PAK',92,'0','0','PK'),(179,'Polonya','PL','POL',48,'0','1','PL'),(180,'Saint Pierre ve Miquelon','PM','SPM',508,'0','0','PM'),(181,'Pitcairn','PN','PCN',870,'0','0','PN'),(182,'Porto Riko','PR','PRI',1,'0','0','PR'),(183,'Filistin','PS','PSE',0,'0','0','PS'),(184,'Portekiz','PT','PRT',351,'0','1','PT'),(185,'Palau','PW','PLW',680,'0','0','PW'),(186,'Paraguay','PY','PRY',595,'0','0','PY'),(187,'Katar','QA','QAT',974,'0','0','QA'),(188,'Reunion','RE','REU',262,'0','0','RE'),(189,'Romanya','RO','ROU',40,'0','1','RO'),(190,'Sırbistan','RS','SRB',381,'0','0','RS'),(191,'Rusya Federasyonu','RU','RUS',7,'0','0','RU'),(192,'Ruanda','RW','RWA',250,'0','0','RW'),(193,'Suudi Arabistan','SA','SAU',966,'0','0','SA'),(194,'Süleyman Adaları','SB','SLB',677,'0','0','SB'),(195,'Seyşeller','SC','SYC',248,'0','0','SC'),(196,'Sudan','SD','SDN',249,'0','0','SD'),(197,'İsveç','SE','SWE',46,'0','1','SE'),(198,'Singapur','SG','SGP',65,'0','0','SG'),(199,'Saint Helena, Ascension ve Tristan da Cunha','SH','SHN',290,'0','0','SH'),(200,'Slovenya','SI','SVN',386,'0','1','SI'),(201,'Svalbard ve Jan Mayen','SJ','SJM',0,'0','0','SJ'),(202,'Slovakya','SK','SVK',421,'0','1','SK'),(203,'Sierra Leone','SL','SLE',232,'0','0','SL'),(204,'San Marino','SM','SMR',378,'0','0','SM'),(205,'Senegal','SN','SEN',221,'0','0','SN'),(206,'Somali','SO','SOM',252,'0','0','SO'),(207,'Surinam','SR','SUR',597,'0','0','SR'),(208,'Güney Sudan','SS','SSD',0,'0','0','SS'),(209,'Sao Tome ve Principe','ST','STP',239,'0','0','ST'),(210,'El Salvador','SV','SLV',503,'0','0','SV'),(211,'Sint Maarten (Hollanda kısmı)','SX','SXM',0,'0','0','SX'),(212,'Suriye Arap Cumhuriyeti','SY','SYR',963,'0','0','SY'),(213,'Svaziland','SZ','SWZ',268,'0','0','SZ'),(214,'Turks ve Caicos Adaları','TC','TCA',1649,'0','0','TC'),(215,'Çad','TD','TCD',235,'0','0','TD'),(216,'Fransız Güney Toprakları','TF','ATF',44,'0','0','TF'),(217,'Togo','TG','TGO',228,'0','0','TG'),(218,'Tayland','TH','THA',66,'0','0','TH'),(219,'Tacikistan','TJ','TJK',992,'0','0','TJ'),(220,'Tokelau','TK','TKL',690,'0','0','TK'),(221,'Doğu Timor','TL','TLS',670,'0','0','TL'),(222,'Türkmenistan','TM','TKM',993,'0','0','TM'),(223,'Tunus','TN','TUN',216,'0','0','TN'),(224,'Tonga','TO','TON',676,'0','0','TO'),(225,'Türkiye','TR','TUR',90,'0','0','TR'),(226,'Trinidad ve Tobago','TT','TTO',1868,'0','0','TT'),(227,'Tuvalu','TV','TUV',688,'0','0','TV'),(228,'Tayvan','TW','TWN',886,'0','0','TW'),(229,'Tanzanya, Birleşik Cumhuriyeti','TZ','TZA',255,'0','0','TZ'),(230,'Ukrayna','UA','UKR',380,'0','0','UA'),(231,'Uganda','UG','UGA',256,'0','0','UG'),(232,'Birleşik Devletler Çevresindeki Küçük Adalar','UM','UMI',44,'0','0','UM'),(233,'Amerika Birleşik Devletleri','US','USA',1,'0','0','US'),(234,'Uruguay','UY','URY',598,'0','0','UY'),(235,'Özbekistan','UZ','UZB',998,'0','0','UZ'),(236,'Vatikan Şehir Devleti','VA','VAT',39,'0','0','VA'),(237,'Saint Vincent ve Grenadinler','VC','VCT',1784,'0','0','VC'),(238,'Venezuela','VE','VEN',58,'0','0','VE'),(239,'Virgin Adaları (İngiliz)','VG','VGB',1284,'0','0','VG'),(240,'Virgin Adaları (ABD)','VI','VIR',1340,'0','0','VI'),(241,'Viet Nam','VN','VNM',84,'0','0','VN'),(242,'Vanuatu','VU','VUT',678,'0','0','VU'),(243,'Wallis ve Futuna','WF','WLF',681,'0','0','WF'),(244,'Samoa','WS','WSM',685,'0','0','WS'),(245,'Yemen','YE','YEM',967,'0','0','YE'),(246,'Mayotte','YT','MYT',262,'0','0','YT'),(247,'Güney Afrika','ZA','ZAF',27,'0','0','ZA'),(248,'Zambiya','ZM','ZMB',260,'0','0','ZM'),(249,'Zimbabve','ZW','ZWE',263,'0','0','ZW');
-/*!40000 ALTER TABLE `countries` ENABLE KEYS */;
+LOCK TABLES `country` WRITE;
+/*!40000 ALTER TABLE `country` DISABLE KEYS */;
+INSERT INTO `country` VALUES (-1,'SYS','System Default','N','XX','XXX',0,-1,'2026-05-29 03:46:13',-1,'2026-05-29 03:46:13'),(1,'AFG','Afghanistan','Y','AF','AFG',93,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(2,'ALB','Albania','Y','AL','ALB',355,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(3,'DZA','Algeria','Y','DZ','DZA',213,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(4,'AND','Andorra','Y','AD','AND',376,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(5,'AGO','Angola','Y','AO','AGO',244,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(6,'ATG','Antigua and Barbuda','Y','AG','ATG',1268,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(7,'ARG','Argentina','Y','AR','ARG',54,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(8,'ARM','Armenia','Y','AM','ARM',374,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(9,'AUS','Australia','Y','AU','AUS',61,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(10,'AUT','Austria','Y','AT','AUT',43,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(11,'AZE','Azerbaijan','Y','AZ','AZE',994,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(12,'BHS','Bahamas','Y','BS','BHS',1242,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(13,'BHR','Bahrain','Y','BH','BHR',973,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(14,'BGD','Bangladesh','Y','BD','BGD',880,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(15,'BRB','Barbados','Y','BB','BRB',1246,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(16,'BLR','Belarus','Y','BY','BLR',375,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(17,'BEL','Belgium','Y','BE','BEL',32,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(18,'BLZ','Belize','Y','BZ','BLZ',501,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(19,'BEN','Benin','Y','BJ','BEN',229,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(20,'BTN','Bhutan','Y','BT','BTN',975,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(21,'BOL','Bolivia','Y','BO','BOL',591,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(22,'BIH','Bosnia and Herzegovina','Y','BA','BIH',387,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(23,'BWA','Botswana','Y','BW','BWA',267,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(24,'BRA','Brazil','Y','BR','BRA',55,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(25,'BRN','Brunei','Y','BN','BRN',673,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(26,'BGR','Bulgaria','Y','BG','BGR',359,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(27,'BFA','Burkina Faso','Y','BF','BFA',226,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(28,'BDI','Burundi','Y','BI','BDI',257,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(29,'CPV','Cabo Verde','Y','CV','CPV',238,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(30,'KHM','Cambodia','Y','KH','KHM',855,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(31,'CMR','Cameroon','Y','CM','CMR',237,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(32,'CAN','Canada','Y','CA','CAN',1,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(33,'CAF','Central African Republic','Y','CF','CAF',236,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(34,'TCD','Chad','Y','TD','TCD',235,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(35,'CHL','Chile','Y','CL','CHL',56,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(36,'CHN','China','Y','CN','CHN',86,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(37,'COL','Colombia','Y','CO','COL',57,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(38,'COM','Comoros','Y','KM','COM',269,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(39,'COD','Congo (DRC)','Y','CD','COD',243,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(40,'COG','Congo (Republic)','Y','CG','COG',242,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(41,'CRI','Costa Rica','Y','CR','CRI',506,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(42,'CIV','Cote d Ivoire','Y','CI','CIV',225,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(43,'HRV','Croatia','Y','HR','HRV',385,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(44,'CUB','Cuba','Y','CU','CUB',53,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(45,'CYP','Cyprus','Y','CY','CYP',357,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(46,'CZE','Czech Republic','Y','CZ','CZE',420,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(47,'DNK','Denmark','Y','DK','DNK',45,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(48,'DJI','Djibouti','Y','DJ','DJI',253,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(49,'DMA','Dominica','Y','DM','DMA',1767,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(50,'DOM','Dominican Republic','Y','DO','DOM',1809,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(51,'ECU','Ecuador','Y','EC','ECU',593,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(52,'EGY','Egypt','Y','EG','EGY',20,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(53,'SLV','El Salvador','Y','SV','SLV',503,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(54,'GNQ','Equatorial Guinea','Y','GQ','GNQ',240,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(55,'ERI','Eritrea','Y','ER','ERI',291,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(56,'EST','Estonia','Y','EE','EST',372,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(57,'SWZ','Eswatini','Y','SZ','SWZ',268,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(58,'ETH','Ethiopia','Y','ET','ETH',251,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(59,'FJI','Fiji','Y','FJ','FJI',679,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(60,'FIN','Finland','Y','FI','FIN',358,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(61,'FRA','France','Y','FR','FRA',33,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(62,'GAB','Gabon','Y','GA','GAB',241,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(63,'GMB','Gambia','Y','GM','GMB',220,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(64,'GEO','Georgia','Y','GE','GEO',995,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(65,'DEU','Germany','Y','DE','DEU',49,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(66,'GHA','Ghana','Y','GH','GHA',233,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(67,'GRC','Greece','Y','GR','GRC',30,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(68,'GRD','Grenada','Y','GD','GRD',1473,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(69,'GTM','Guatemala','Y','GT','GTM',502,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(70,'GIN','Guinea','Y','GN','GIN',224,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(71,'GNB','Guinea-Bissau','Y','GW','GNB',245,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(72,'GUY','Guyana','Y','GY','GUY',592,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(73,'HTI','Haiti','Y','HT','HTI',509,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(74,'HND','Honduras','Y','HN','HND',504,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(75,'HUN','Hungary','Y','HU','HUN',36,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(76,'ISL','Iceland','Y','IS','ISL',354,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(77,'IND','India','Y','IN','IND',91,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(78,'IDN','Indonesia','Y','ID','IDN',62,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(79,'IRN','Iran','Y','IR','IRN',98,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(80,'IRQ','Iraq','Y','IQ','IRQ',964,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(81,'IRL','Ireland','Y','IE','IRL',353,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(82,'ISR','Israel','Y','IL','ISR',972,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(83,'ITA','Italy','Y','IT','ITA',39,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(84,'JAM','Jamaica','Y','JM','JAM',1876,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(85,'JPN','Japan','Y','JP','JPN',81,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(86,'JOR','Jordan','Y','JO','JOR',962,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(87,'KAZ','Kazakhstan','Y','KZ','KAZ',7,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(88,'KEN','Kenya','Y','KE','KEN',254,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(89,'KIR','Kiribati','Y','KI','KIR',686,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(90,'PRK','Korea (North)','Y','KP','PRK',850,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(91,'KOR','Korea (South)','Y','KR','KOR',82,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(92,'KWT','Kuwait','Y','KW','KWT',965,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(93,'KGZ','Kyrgyzstan','Y','KG','KGZ',996,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(94,'LAO','Laos','Y','LA','LAO',856,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(95,'LVA','Latvia','Y','LV','LVA',371,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(96,'LBN','Lebanon','Y','LB','LBN',961,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(97,'LSO','Lesotho','Y','LS','LSO',266,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(98,'LBR','Liberia','Y','LR','LBR',231,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(99,'LBY','Libya','Y','LY','LBY',218,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(100,'LIE','Liechtenstein','Y','LI','LIE',423,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(101,'LTU','Lithuania','Y','LT','LTU',370,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(102,'LUX','Luxembourg','Y','LU','LUX',352,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(103,'MDG','Madagascar','Y','MG','MDG',261,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(104,'MWI','Malawi','Y','MW','MWI',265,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(105,'MYS','Malaysia','Y','MY','MYS',60,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(106,'MDV','Maldives','Y','MV','MDV',960,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(107,'MLI','Mali','Y','ML','MLI',223,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(108,'MLT','Malta','Y','MT','MLT',356,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(109,'MHL','Marshall Islands','Y','MH','MHL',692,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(110,'MRT','Mauritania','Y','MR','MRT',222,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(111,'MUS','Mauritius','Y','MU','MUS',230,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(112,'MEX','Mexico','Y','MX','MEX',52,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(113,'FSM','Micronesia','Y','FM','FSM',691,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(114,'MDA','Moldova','Y','MD','MDA',373,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(115,'MCO','Monaco','Y','MC','MCO',377,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(116,'MNG','Mongolia','Y','MN','MNG',976,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(117,'MNE','Montenegro','Y','ME','MNE',382,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(118,'MAR','Morocco','Y','MA','MAR',212,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(119,'MOZ','Mozambique','Y','MZ','MOZ',258,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(120,'MMR','Myanmar','Y','MM','MMR',95,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(121,'NAM','Namibia','Y','NA','NAM',264,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(122,'NRU','Nauru','Y','NR','NRU',674,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(123,'NPL','Nepal','Y','NP','NPL',977,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(124,'NLD','Netherlands','Y','NL','NLD',31,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(125,'NZL','New Zealand','Y','NZ','NZL',64,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(126,'NIC','Nicaragua','Y','NI','NIC',505,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(127,'NER','Niger','Y','NE','NER',227,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(128,'NGA','Nigeria','Y','NG','NGA',234,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(129,'MKD','North Macedonia','Y','MK','MKD',389,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(130,'NOR','Norway','Y','NO','NOR',47,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(131,'OMN','Oman','Y','OM','OMN',968,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(132,'PAK','Pakistan','Y','PK','PAK',92,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(133,'PLW','Palau','Y','PW','PLW',680,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(134,'PAN','Panama','Y','PA','PAN',507,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(135,'PNG','Papua New Guinea','Y','PG','PNG',675,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(136,'PRY','Paraguay','Y','PY','PRY',595,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(137,'PER','Peru','Y','PE','PER',51,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(138,'PHL','Philippines','Y','PH','PHL',63,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(139,'POL','Poland','Y','PL','POL',48,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(140,'PRT','Portugal','Y','PT','PRT',351,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(141,'QAT','Qatar','Y','QA','QAT',974,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(142,'ROU','Romania','Y','RO','ROU',40,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(143,'RUS','Russia','Y','RU','RUS',7,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(144,'RWA','Rwanda','Y','RW','RWA',250,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(145,'KNA','Saint Kitts and Nevis','Y','KN','KNA',1869,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(146,'LCA','Saint Lucia','Y','LC','LCA',1758,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(147,'VCT','Saint Vincent and the Grenadines','Y','VC','VCT',1784,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(148,'WSM','Samoa','Y','WS','WSM',685,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(149,'SMR','San Marino','Y','SM','SMR',378,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(150,'STP','Sao Tome and Principe','Y','ST','STP',239,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(151,'SAU','Saudi Arabia','Y','SA','SAU',966,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(152,'SEN','Senegal','Y','SN','SEN',221,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(153,'SRB','Serbia','Y','RS','SRB',381,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(154,'SYC','Seychelles','Y','SC','SYC',248,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(155,'SLE','Sierra Leone','Y','SL','SLE',232,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(156,'SGP','Singapore','Y','SG','SGP',65,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(157,'SVK','Slovakia','Y','SK','SVK',421,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(158,'SVN','Slovenia','Y','SI','SVN',386,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(159,'SLB','Solomon Islands','Y','SB','SLB',677,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(160,'SOM','Somalia','Y','SO','SOM',252,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(161,'ZAF','South Africa','Y','ZA','ZAF',27,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(162,'SSD','South Sudan','Y','SS','SSD',211,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(163,'ESP','Spain','Y','ES','ESP',34,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(164,'LKA','Sri Lanka','Y','LK','LKA',94,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(165,'SDN','Sudan','Y','SD','SDN',249,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(166,'SUR','Suriname','Y','SR','SUR',597,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(167,'SWE','Sweden','Y','SE','SWE',46,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(168,'CHE','Switzerland','Y','CH','CHE',41,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(169,'SYR','Syria','Y','SY','SYR',963,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(170,'TWN','Taiwan','Y','TW','TWN',886,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(171,'TJK','Tajikistan','Y','TJ','TJK',992,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(172,'TZA','Tanzania','Y','TZ','TZA',255,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(173,'THA','Thailand','Y','TH','THA',66,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(174,'TLS','Timor-Leste','Y','TL','TLS',670,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(175,'TGO','Togo','Y','TG','TGO',228,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(176,'TON','Tonga','Y','TO','TON',676,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(177,'TTO','Trinidad and Tobago','Y','TT','TTO',1868,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(178,'TUN','Tunisia','Y','TN','TUN',216,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(179,'TUR','Turkey','Y','TR','TUR',90,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(180,'TKM','Turkmenistan','Y','TM','TKM',993,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(181,'TUV','Tuvalu','Y','TV','TUV',688,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(182,'UGA','Uganda','Y','UG','UGA',256,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(183,'UKR','Ukraine','Y','UA','UKR',380,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(184,'ARE','United Arab Emirates','Y','AE','ARE',971,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(185,'GBR','United Kingdom','Y','GB','GBR',44,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(186,'USA','United States','Y','US','USA',1,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(187,'URY','Uruguay','Y','UY','URY',598,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(188,'UZB','Uzbekistan','Y','UZ','UZB',998,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(189,'VUT','Vanuatu','Y','VU','VUT',678,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(190,'VAT','Vatican City','Y','VA','VAT',379,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(191,'VEN','Venezuela','Y','VE','VEN',58,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(192,'VNM','Vietnam','Y','VN','VNM',84,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(193,'YEM','Yemen','Y','YE','YEM',967,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(194,'ZMB','Zambia','Y','ZM','ZMB',260,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49'),(195,'ZWE','Zimbabwe','Y','ZW','ZWE',263,-1,'2026-05-29 03:47:06',-1,'2026-05-29 03:48:49');
+/*!40000 ALTER TABLE `country` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -267,6 +274,41 @@ INSERT INTO `designation` VALUES (-1,'DEFAULT','Default Designation','Y','System
 UNLOCK TABLES;
 
 --
+-- Table structure for table `district`
+--
+
+DROP TABLE IF EXISTS `district`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `district` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `code` varchar(10) DEFAULT NULL,
+  `name` varchar(70) NOT NULL DEFAULT '',
+  `is_active` char(1) DEFAULT 'Y',
+  `created_by` bigint NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_by` bigint NOT NULL,
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`),
+  KEY `fk_district_created_by` (`created_by`),
+  KEY `fk_district_modified_by` (`modified_by`),
+  CONSTRAINT `fk_district_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
+  CONSTRAINT `fk_district_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `usr` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `district`
+--
+
+LOCK TABLES `district` WRITE;
+/*!40000 ALTER TABLE `district` DISABLE KEYS */;
+INSERT INTO `district` VALUES (-1,'SYS','System Default','N',-1,'2026-05-29 04:04:46',-1,'2026-05-29 04:04:46'),(1,'COL','Colombo','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(2,'GAM','Gampaha','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(3,'KAL','Kalutara','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(4,'KAN','Kandy','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(5,'MAT','Matale','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(6,'NUW','Nuwara Eliya','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(7,'GAL','Galle','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(8,'HAM','Hambantota','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(9,'MATR','Matara','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(10,'JAF','Jaffna','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(11,'KIL','Kilinochchi','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(12,'MAN','Mannar','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(13,'MUL','Mullaitivu','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(14,'VAV','Vavuniya','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(15,'BAT','Batticaloa','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(16,'AMP','Ampara','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(17,'TRI','Trincomalee','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(18,'KUR','Kurunegala','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(19,'PUT','Puttalam','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(20,'ANU','Anuradhapura','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(21,'POL','Polonnaruwa','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(22,'BAD','Badulla','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(23,'MON','Monaragala','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(24,'RAT','Ratnapura','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12'),(25,'KEG','Kegalle','Y',-1,'2026-05-29 04:07:12',-1,'2026-05-29 04:07:12');
+/*!40000 ALTER TABLE `district` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `emp_fa`
 --
 
@@ -277,8 +319,8 @@ CREATE TABLE `emp_fa` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `emp_id` bigint NOT NULL,
   `fa_id` bigint NOT NULL,
-  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `payroll_month` varchar(20) NOT NULL,
+  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `is_processed` char(1) NOT NULL DEFAULT 'N',
   `processed_date` datetime DEFAULT NULL,
   `created_by` bigint NOT NULL,
@@ -286,10 +328,12 @@ CREATE TABLE `emp_fa` (
   `modified_by` bigint NOT NULL,
   `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_emp_fa` (`emp_id`,`fa_id`,`payroll_month`),
   KEY `fk_emp_fa_emp_id` (`emp_id`),
   KEY `fk_emp_fa_fa_id` (`fa_id`),
   KEY `fk_emp_fa_created_by` (`created_by`),
   KEY `fk_emp_fa_modified_by` (`modified_by`),
+  KEY `idx_emp_fa_month` (`emp_id`,`payroll_month`),
   CONSTRAINT `fk_emp_fa_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_emp_fa_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`),
   CONSTRAINT `fk_emp_fa_fa_id` FOREIGN KEY (`fa_id`) REFERENCES `fixed_allowance` (`id`),
@@ -303,7 +347,7 @@ CREATE TABLE `emp_fa` (
 
 LOCK TABLES `emp_fa` WRITE;
 /*!40000 ALTER TABLE `emp_fa` DISABLE KEYS */;
-INSERT INTO `emp_fa` VALUES (-1,-1,-1,0.00,'MMYYYY','0',NULL,-1,'2026-05-18 14:39:05',-1,'2026-05-18 14:39:05'),(1,1,1,15000.00,'2026-01','Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(2,2,2,12000.00,'2026-01','Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(3,3,3,8000.00,'2026-01','N',NULL,1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(4,4,1,10000.00,'2026-01','Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(5,5,4,5000.00,'2026-01','N',NULL,1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(6,6,2,14000.00,'2026-02','Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(7,7,5,7500.00,'2026-02','N',NULL,1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(8,8,1,16000.00,'2026-02','Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(9,9,3,9500.00,'2026-02','N',NULL,1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(10,10,4,11000.00,'2026-02','Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02');
+INSERT INTO `emp_fa` VALUES (-1,-1,-1,'MMYYYY',0.00,'0',NULL,-1,'2026-05-18 14:39:05',-1,'2026-05-18 14:39:05'),(1,1,1,'2026-01',15000.00,'Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(2,2,2,'2026-01',12000.00,'Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(3,3,3,'2026-01',8000.00,'N',NULL,1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(4,4,1,'2026-01',10000.00,'Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(5,5,4,'2026-01',5000.00,'N',NULL,1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(6,6,2,'2026-02',14000.00,'Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(7,7,5,'2026-02',7500.00,'N',NULL,1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(8,8,1,'2026-02',16000.00,'Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(9,9,3,'2026-02',9500.00,'N',NULL,1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02'),(10,10,4,'2026-02',11000.00,'Y','2026-05-25 08:23:02',1,'2026-05-25 02:53:02',1,'2026-05-25 02:53:02');
 /*!40000 ALTER TABLE `emp_fa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,8 +362,8 @@ CREATE TABLE `emp_fd` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `emp_id` bigint NOT NULL,
   `fd_id` bigint NOT NULL,
-  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `payroll_month` varchar(20) NOT NULL,
+  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `is_processed` tinyint(1) NOT NULL DEFAULT '0',
   `processed_date` datetime DEFAULT NULL,
   `created_by` bigint NOT NULL,
@@ -327,10 +371,12 @@ CREATE TABLE `emp_fd` (
   `modified_by` bigint NOT NULL,
   `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_emp_fd` (`emp_id`,`fd_id`,`payroll_month`),
   KEY `fk_emp_fd_emp_id` (`emp_id`),
   KEY `fk_emp_fd_fd_id` (`fd_id`),
   KEY `fk_emp_fd_created_by` (`created_by`),
   KEY `fk_emp_fd_modified_by` (`modified_by`),
+  KEY `idx_emp_fd_month` (`emp_id`,`payroll_month`),
   CONSTRAINT `fk_emp_fd_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_emp_fd_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`),
   CONSTRAINT `fk_emp_fd_fd_id` FOREIGN KEY (`fd_id`) REFERENCES `fixed_deduction` (`id`),
@@ -344,7 +390,7 @@ CREATE TABLE `emp_fd` (
 
 LOCK TABLES `emp_fd` WRITE;
 /*!40000 ALTER TABLE `emp_fd` DISABLE KEYS */;
-INSERT INTO `emp_fd` VALUES (-1,-1,-1,0.00,'MMYYYY',0,NULL,-1,'2026-05-18 14:39:05',-1,'2026-05-18 14:39:05'),(1,1,1,2500.00,'2026-01',1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(2,2,2,1800.00,'2026-01',1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(3,3,3,3200.00,'2026-01',0,NULL,1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(4,4,1,1500.00,'2026-01',1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(5,5,4,4100.00,'2026-01',0,NULL,1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(6,6,2,2750.00,'2026-02',1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(7,7,5,1950.00,'2026-02',0,NULL,1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(8,8,1,3600.00,'2026-02',1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(9,9,3,2900.00,'2026-02',0,NULL,1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(10,10,4,2250.00,'2026-02',1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57');
+INSERT INTO `emp_fd` VALUES (-1,-1,-1,'MMYYYY',0.00,0,NULL,-1,'2026-05-18 14:39:05',-1,'2026-05-18 14:39:05'),(1,1,1,'2026-01',2500.00,1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(2,2,2,'2026-01',1800.00,1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(3,3,3,'2026-01',3200.00,0,NULL,1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(4,4,1,'2026-01',1500.00,1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(5,5,4,'2026-01',4100.00,0,NULL,1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(6,6,2,'2026-02',2750.00,1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(7,7,5,'2026-02',1950.00,0,NULL,1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(8,8,1,'2026-02',3600.00,1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(9,9,3,'2026-02',2900.00,0,NULL,1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57'),(10,10,4,'2026-02',2250.00,1,'2026-05-25 08:23:57',1,'2026-05-25 02:53:57',1,'2026-05-25 02:53:57');
 /*!40000 ALTER TABLE `emp_fd` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -359,9 +405,9 @@ CREATE TABLE `emp_np` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `emp_id` bigint NOT NULL,
   `nopay_id` bigint NOT NULL,
+  `payroll_month` varchar(20) DEFAULT NULL,
   `days` decimal(5,2) NOT NULL DEFAULT '0.00',
   `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
-  `payroll_month` varchar(20) DEFAULT NULL,
   `is_processed` char(1) NOT NULL DEFAULT 'N',
   `processed_date` datetime DEFAULT NULL,
   `created_by` bigint NOT NULL,
@@ -369,16 +415,18 @@ CREATE TABLE `emp_np` (
   `modified_by` bigint NOT NULL,
   `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_emp_np` (`emp_id`,`nopay_id`,`payroll_month`),
   KEY `fk_emp_np_emp` (`emp_id`),
   KEY `fk_emp_np_nopay` (`nopay_id`),
   KEY `fk_emp_np_created_by` (`created_by`),
   KEY `fk_emp_np_modified_by` (`modified_by`),
+  KEY `idx_emp_np_month` (`emp_id`,`payroll_month`),
   CONSTRAINT `fk_emp_np_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_emp_np_emp` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`),
   CONSTRAINT `fk_emp_np_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_emp_np_nopay` FOREIGN KEY (`nopay_id`) REFERENCES `nopay_days` (`id`),
   CONSTRAINT `chk_emp_np_processed` CHECK ((`is_processed` in (_utf8mb4'Y',_utf8mb4'N')))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -387,7 +435,7 @@ CREATE TABLE `emp_np` (
 
 LOCK TABLES `emp_np` WRITE;
 /*!40000 ALTER TABLE `emp_np` DISABLE KEYS */;
-INSERT INTO `emp_np` VALUES (-1,-1,-1,0.00,0.00,NULL,'N',NULL,-1,'2026-05-24 04:01:41',-1,'2026-05-24 04:01:41');
+INSERT INTO `emp_np` VALUES (-1,-1,-1,NULL,0.00,0.00,'N',NULL,-1,'2026-05-24 04:01:41',-1,'2026-05-24 04:01:41'),(1,1,1,'2026-01',0.50,1923.08,'N',NULL,1,'2026-05-31 18:58:44',1,'2026-05-31 18:58:44'),(2,2,2,'2026-01',1.00,3846.15,'N',NULL,1,'2026-05-31 18:58:44',1,'2026-05-31 18:58:44'),(3,3,1,'2026-01',1.00,3846.15,'N',NULL,1,'2026-05-31 18:58:44',1,'2026-05-31 18:58:44'),(4,4,3,'2026-01',0.25,961.54,'N',NULL,1,'2026-05-31 18:58:44',1,'2026-05-31 18:58:44'),(5,5,2,'2026-01',2.00,7692.31,'N',NULL,1,'2026-05-31 18:58:44',1,'2026-05-31 18:58:44'),(6,1,2,'2026-02',1.00,1000.00,'N',NULL,1,'2026-05-31 18:58:44',1,'2026-05-31 19:00:09'),(7,3,3,'2026-02',0.25,961.54,'N',NULL,1,'2026-05-31 18:58:44',1,'2026-05-31 18:58:44');
 /*!40000 ALTER TABLE `emp_np` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,9 +450,9 @@ CREATE TABLE `emp_ot` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `emp_id` bigint NOT NULL,
   `overtime_id` bigint NOT NULL,
+  `payroll_month` varchar(20) DEFAULT NULL,
   `hours` decimal(5,2) NOT NULL DEFAULT '0.00',
   `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
-  `payroll_month` varchar(20) DEFAULT NULL,
   `is_processed` char(1) NOT NULL DEFAULT 'N',
   `processed_date` datetime DEFAULT NULL,
   `created_by` bigint NOT NULL,
@@ -412,10 +460,12 @@ CREATE TABLE `emp_ot` (
   `modified_by` bigint NOT NULL,
   `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_emp_ot` (`emp_id`,`overtime_id`,`payroll_month`),
   KEY `fk_emp_ot_emp` (`emp_id`),
   KEY `fk_emp_ot_overtime` (`overtime_id`),
   KEY `fk_emp_ot_created_by` (`created_by`),
   KEY `fk_emp_ot_modified_by` (`modified_by`),
+  KEY `idx_emp_ot_month` (`emp_id`,`payroll_month`),
   CONSTRAINT `fk_emp_ot_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_emp_ot_emp` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`),
   CONSTRAINT `fk_emp_ot_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `usr` (`id`),
@@ -430,8 +480,97 @@ CREATE TABLE `emp_ot` (
 
 LOCK TABLES `emp_ot` WRITE;
 /*!40000 ALTER TABLE `emp_ot` DISABLE KEYS */;
-INSERT INTO `emp_ot` VALUES (-1,-1,-1,0.00,0.00,NULL,'N',NULL,-1,'2026-05-24 04:06:37',-1,'2026-05-24 04:06:37'),(1,1,1,12.50,8500.00,'2026-01','Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(2,2,1,8.00,5200.00,'2026-01','Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(3,3,2,15.75,11250.00,'2026-01','N',NULL,1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(4,4,2,6.50,4300.00,'2026-01','Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(5,5,1,10.00,7000.00,'2026-01','N',NULL,1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(6,6,3,18.00,13500.00,'2026-02','Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(7,7,2,5.25,3900.00,'2026-02','N',NULL,1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(8,8,1,20.00,15000.00,'2026-02','Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(9,9,3,7.50,5600.00,'2026-02','N',NULL,1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(10,10,2,11.00,8200.00,'2026-02','Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13');
+INSERT INTO `emp_ot` VALUES (-1,-1,-1,NULL,0.00,0.00,'N',NULL,-1,'2026-05-24 04:06:37',-1,'2026-05-24 04:06:37'),(1,1,1,'2026-01',12.50,8500.00,'Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(2,2,1,'2026-01',8.00,5200.00,'Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(3,3,2,'2026-01',15.75,11250.00,'N',NULL,1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(4,4,2,'2026-01',6.50,4300.00,'Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(5,5,1,'2026-01',10.00,7000.00,'N',NULL,1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(6,6,3,'2026-02',18.00,13500.00,'Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(7,7,2,'2026-02',5.25,3900.00,'N',NULL,1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(8,8,1,'2026-02',20.00,15000.00,'Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(9,9,3,'2026-02',7.50,5600.00,'N',NULL,1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13'),(10,10,2,'2026-02',11.00,8200.00,'Y','2026-05-25 08:22:13',1,'2026-05-25 02:52:13',1,'2026-05-25 02:52:13');
 /*!40000 ALTER TABLE `emp_ot` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `emp_payroll_run`
+--
+
+DROP TABLE IF EXISTS `emp_payroll_run`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `emp_payroll_run` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `emp_id` bigint NOT NULL,
+  `payroll_month` varchar(20) NOT NULL,
+  `basic_salary` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_allowances` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_deductions` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `gross_pay` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `net_pay` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `status` varchar(20) NOT NULL DEFAULT 'DRAFT' COMMENT 'DRAFT | PROCESSED | LOCKED',
+  `processed_date` datetime DEFAULT NULL,
+  `processed_by` bigint DEFAULT NULL,
+  `created_by` bigint NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_by` bigint NOT NULL,
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_emp_payroll_run` (`emp_id`,`payroll_month`),
+  KEY `idx_run_emp_month` (`emp_id`,`payroll_month`),
+  KEY `idx_run_status` (`status`),
+  KEY `fk_run_processed_by` (`processed_by`),
+  KEY `fk_run_created_by` (`created_by`),
+  KEY `fk_run_modified_by` (`modified_by`),
+  CONSTRAINT `fk_run_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
+  CONSTRAINT `fk_run_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`),
+  CONSTRAINT `fk_run_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `usr` (`id`),
+  CONSTRAINT `fk_run_processed_by` FOREIGN KEY (`processed_by`) REFERENCES `usr` (`id`),
+  CONSTRAINT `chk_run_status` CHECK ((`status` in (_utf8mb4'DRAFT',_utf8mb4'PROCESSED',_utf8mb4'LOCKED')))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `emp_payroll_run`
+--
+
+LOCK TABLES `emp_payroll_run` WRITE;
+/*!40000 ALTER TABLE `emp_payroll_run` DISABLE KEYS */;
+/*!40000 ALTER TABLE `emp_payroll_run` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `emp_payroll_run_detail`
+--
+
+DROP TABLE IF EXISTS `emp_payroll_run_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `emp_payroll_run_detail` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `run_id` bigint NOT NULL,
+  `component_type` varchar(10) NOT NULL COMMENT 'FA | FD | VA | VD | OT | NOPAY',
+  `component_id` bigint NOT NULL,
+  `component_code` varchar(20) NOT NULL,
+  `component_name` varchar(150) NOT NULL,
+  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `hours` decimal(5,2) DEFAULT NULL COMMENT 'OT only',
+  `days` decimal(5,2) DEFAULT NULL COMMENT 'NOPAY only',
+  `created_by` bigint NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_by` bigint NOT NULL,
+  `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_run_detail` (`run_id`,`component_type`,`component_id`),
+  KEY `idx_detail_run_id` (`run_id`),
+  KEY `fk_detail_created_by` (`created_by`),
+  KEY `fk_detail_modified_by` (`modified_by`),
+  CONSTRAINT `fk_detail_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
+  CONSTRAINT `fk_detail_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `usr` (`id`),
+  CONSTRAINT `fk_detail_run_id` FOREIGN KEY (`run_id`) REFERENCES `emp_payroll_run` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `chk_detail_component_type` CHECK ((`component_type` in (_utf8mb4'FA',_utf8mb4'FD',_utf8mb4'VA',_utf8mb4'VD',_utf8mb4'OT',_utf8mb4'NOPAY')))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `emp_payroll_run_detail`
+--
+
+LOCK TABLES `emp_payroll_run_detail` WRITE;
+/*!40000 ALTER TABLE `emp_payroll_run_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `emp_payroll_run_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -445,8 +584,8 @@ CREATE TABLE `emp_va` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `emp_id` bigint NOT NULL,
   `va_id` bigint NOT NULL,
-  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `payroll_month` varchar(20) DEFAULT NULL,
+  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `is_processed` char(1) NOT NULL DEFAULT 'N',
   `processed_date` datetime DEFAULT NULL,
   `created_by` bigint NOT NULL,
@@ -454,10 +593,12 @@ CREATE TABLE `emp_va` (
   `modified_by` bigint NOT NULL,
   `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_emp_va` (`emp_id`,`va_id`,`payroll_month`),
   KEY `fk_emp_va_emp` (`emp_id`),
   KEY `fk_emp_va_va` (`va_id`),
   KEY `fk_emp_va_created_by` (`created_by`),
   KEY `fk_emp_va_modified_by` (`modified_by`),
+  KEY `idx_emp_va_month` (`emp_id`,`payroll_month`),
   CONSTRAINT `fk_emp_va_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_emp_va_emp` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`),
   CONSTRAINT `fk_emp_va_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `usr` (`id`),
@@ -472,7 +613,7 @@ CREATE TABLE `emp_va` (
 
 LOCK TABLES `emp_va` WRITE;
 /*!40000 ALTER TABLE `emp_va` DISABLE KEYS */;
-INSERT INTO `emp_va` VALUES (-1,-1,-1,0.00,NULL,'N',NULL,-1,'2026-05-24 03:50:15',-1,'2026-05-24 03:50:15');
+INSERT INTO `emp_va` VALUES (-1,-1,-1,NULL,0.00,'N',NULL,-1,'2026-05-24 03:50:15',-1,'2026-05-24 03:50:15');
 /*!40000 ALTER TABLE `emp_va` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -487,8 +628,8 @@ CREATE TABLE `emp_vd` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `emp_id` bigint NOT NULL,
   `vd_id` bigint NOT NULL,
-  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `payroll_month` varchar(20) DEFAULT NULL,
+  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
   `is_processed` char(1) NOT NULL DEFAULT 'N',
   `processed_date` datetime DEFAULT NULL,
   `created_by` bigint NOT NULL,
@@ -496,16 +637,18 @@ CREATE TABLE `emp_vd` (
   `modified_by` bigint NOT NULL,
   `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_emp_vd` (`emp_id`,`vd_id`,`payroll_month`),
   KEY `fk_emp_vd_emp` (`emp_id`),
   KEY `fk_emp_vd_vd` (`vd_id`),
   KEY `fk_emp_vd_created_by` (`created_by`),
   KEY `fk_emp_vd_modified_by` (`modified_by`),
+  KEY `idx_emp_vd_month` (`emp_id`,`payroll_month`),
   CONSTRAINT `fk_emp_vd_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_emp_vd_emp` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`),
   CONSTRAINT `fk_emp_vd_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_emp_vd_vd` FOREIGN KEY (`vd_id`) REFERENCES `variable_deduction` (`id`),
   CONSTRAINT `chk_emp_vd_processed` CHECK ((`is_processed` in (_utf8mb4'Y',_utf8mb4'N')))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=261 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -514,7 +657,7 @@ CREATE TABLE `emp_vd` (
 
 LOCK TABLES `emp_vd` WRITE;
 /*!40000 ALTER TABLE `emp_vd` DISABLE KEYS */;
-INSERT INTO `emp_vd` VALUES (-1,-1,-1,0.00,NULL,'N',NULL,-1,'2026-05-24 03:52:40',-1,'2026-05-24 03:52:40');
+INSERT INTO `emp_vd` VALUES (-1,-1,-1,NULL,0.00,'N',NULL,-1,'2026-05-24 03:52:40',-1,'2026-05-24 03:52:40'),(1,1,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(2,2,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(3,3,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(4,4,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(5,5,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(6,6,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(7,7,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(8,8,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(9,9,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(10,10,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(11,11,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(12,12,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(13,13,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(14,14,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(15,15,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(16,16,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(17,17,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(18,18,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(19,19,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(20,20,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(21,21,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(22,22,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(23,23,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(24,24,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(25,25,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(26,26,1,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(27,1,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(28,2,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(29,3,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(30,4,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(31,5,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(32,6,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(33,7,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(34,8,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(35,9,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(36,10,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(37,11,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(38,12,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(39,13,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(40,14,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(41,15,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(42,16,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(43,17,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(44,18,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(45,19,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(46,20,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(47,21,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(48,22,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(49,23,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(50,24,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(51,25,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(52,26,2,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(53,1,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(54,2,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(55,3,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(56,4,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(57,5,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(58,6,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(59,7,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(60,8,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(61,9,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(62,10,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(63,11,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(64,12,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(65,13,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:06',1,'2026-05-31 19:00:06'),(66,14,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(67,15,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(68,16,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(69,17,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(70,18,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(71,19,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(72,20,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(73,21,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(74,22,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(75,23,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(76,24,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(77,25,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(78,26,3,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(79,1,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(80,2,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(81,3,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(82,4,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(83,5,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(84,6,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(85,7,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(86,8,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(87,9,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(88,10,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(89,11,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(90,12,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(91,13,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(92,14,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(93,15,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(94,16,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(95,17,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(96,18,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(97,19,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(98,20,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(99,21,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(100,22,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(101,23,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(102,24,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(103,25,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(104,26,4,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(105,1,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(106,2,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(107,3,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(108,4,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(109,5,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(110,6,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(111,7,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(112,8,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(113,9,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(114,10,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(115,11,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(116,12,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(117,13,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(118,14,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(119,15,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(120,16,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(121,17,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(122,18,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(123,19,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(124,20,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(125,21,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(126,22,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(127,23,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(128,24,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(129,25,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(130,26,5,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(131,1,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:07',1,'2026-05-31 19:00:07'),(132,2,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(133,3,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(134,4,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(135,5,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(136,6,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(137,7,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(138,8,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(139,9,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(140,10,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(141,11,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(142,12,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(143,13,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(144,14,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(145,15,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(146,16,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(147,17,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(148,18,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(149,19,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(150,20,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(151,21,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(152,22,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(153,23,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(154,24,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(155,25,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(156,26,7,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(157,1,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(158,2,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(159,3,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(160,4,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(161,5,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(162,6,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(163,7,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(164,8,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(165,9,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(166,10,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(167,11,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(168,12,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(169,13,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(170,14,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(171,15,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(172,16,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(173,17,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(174,18,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(175,19,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(176,20,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(177,21,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(178,22,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(179,23,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(180,24,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(181,25,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(182,26,8,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(183,1,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(184,2,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(185,3,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(186,4,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(187,5,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(188,6,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(189,7,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(190,8,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(191,9,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(192,10,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(193,11,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(194,12,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(195,13,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(196,14,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(197,15,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(198,16,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(199,17,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(200,18,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:08',1,'2026-05-31 19:00:08'),(201,19,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(202,20,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(203,21,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(204,22,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(205,23,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(206,24,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(207,25,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(208,26,9,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(209,1,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(210,2,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(211,3,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(212,4,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(213,5,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(214,6,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(215,7,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(216,8,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(217,9,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(218,10,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(219,11,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(220,12,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(221,13,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(222,14,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(223,15,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(224,16,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(225,17,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(226,18,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(227,19,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(228,20,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(229,21,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(230,22,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(231,23,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(232,24,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(233,25,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(234,26,10,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(235,1,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(236,2,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(237,3,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(238,4,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(239,5,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(240,6,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(241,7,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(242,8,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(243,9,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(244,10,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(245,11,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(246,12,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(247,13,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(248,14,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(249,15,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(250,16,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(251,17,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(252,18,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(253,19,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(254,20,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(255,21,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(256,22,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(257,23,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(258,24,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(259,25,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09'),(260,26,11,'2026-02',0.00,'N',NULL,1,'2026-05-31 19:00:09',1,'2026-05-31 19:00:09');
 /*!40000 ALTER TABLE `emp_vd` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -578,7 +721,7 @@ CREATE TABLE `employee` (
   KEY `fk_employee_country_id` (`country_id`),
   KEY `fk_employee_status_id` (`status_id`),
   CONSTRAINT `fk_employee_branch` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`),
-  CONSTRAINT `fk_employee_country_id` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`),
+  CONSTRAINT `fk_employee_country_id` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`),
   CONSTRAINT `fk_employee_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_employee_designation` FOREIGN KEY (`designation_id`) REFERENCES `designation` (`id`),
   CONSTRAINT `fk_employee_emp_type` FOREIGN KEY (`employee_type_id`) REFERENCES `type` (`id`),
@@ -588,7 +731,7 @@ CREATE TABLE `employee` (
   CONSTRAINT `fk_employee_nopay_days` FOREIGN KEY (`nopay_days_id`) REFERENCES `nopay_days` (`id`),
   CONSTRAINT `fk_employee_status_id` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`),
   CONSTRAINT `chk_employee_active` CHECK ((`is_active` in (_utf8mb4'Y',_utf8mb4'N')))
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -597,7 +740,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (-1,'DEFAULT','System','Employee',NULL,NULL,'Y','Default Record','System Employee','N/A','N/A',0.00,'2026-05-17',-1,NULL,NULL,-1,-1,-1,-1,-1,-1,NULL,NULL,NULL,'0000000000','system@local','N/A','N/A','N/A','N/A',-1,'N/A','N/A','N/A',-1,'2026-05-17 12:34:46',-1,'2026-05-28 05:30:53'),(1,'EMP001','John','Fernando','1990-01-15','901234567V','Y','Active employee','John Fernando','EPF001','ETF001',85000.00,'2022-01-10',1,NULL,NULL,1,1,1,1,1,1,NULL,NULL,NULL,'0771000001','john1@idealpay.com','No 10','Main Street','Colombo','Colombo',1,'Mary Fernando','No 10 Main Street','0779000001',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(2,'EMP002','Kamal','Perera','1988-03-21','881234568V','Y','Senior staff','Kamal Perera','EPF002','ETF002',95000.00,'2021-05-12',2,'2026-05-01','2026-05-28',1,2,2,2,2,1,NULL,NULL,NULL,'0771000002','kamal2@idealpay.com','No 20','Lake Road','Kandy','Kandy',1,'Nimali Perera','No 20 Lake Road','0779000002',1,'2026-05-20 02:28:27',1,'2026-05-28 18:00:09'),(3,'EMP003','Nimal','Silva','1992-07-11','921234569V','Y','IT employee','Nimal Silva','EPF003','ETF003',78000.00,'2023-02-01',1,NULL,NULL,1,1,3,1,1,1,NULL,NULL,NULL,'0771000003','nimal3@idealpay.com','No 30','Temple Road','Galle','Galle',1,'Suneth Silva','No 30 Temple Road','0779000003',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(4,'EMP004','Saman','Jayasinghe','1991-09-19','911234570V','Y','Finance staff','Saman Jayasinghe','EPF004','ETF004',88000.00,'2020-03-14',2,NULL,NULL,1,3,4,2,2,1,NULL,NULL,NULL,'0771000004','saman4@idealpay.com','No 40','Flower Road','Kurunegala','Kurunegala',1,'Anoma Jayasinghe','No 40 Flower Road','0779000004',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(5,'EMP005','Ruwan','Dias','1987-12-05','871234571V','Y','HR Executive','Ruwan Dias','EPF005','ETF005',92000.00,'2019-08-22',2,NULL,NULL,1,2,5,3,3,1,NULL,NULL,NULL,'0771000005','ruwan5@idealpay.com','No 50','Station Road','Matara','Matara',1,'Kumari Dias','No 50 Station Road','0779000005',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(6,'EMP006','Tharindu','Peris','1993-11-12','931234572V','Y','Operations staff','Tharindu Peris','EPF006','ETF006',73000.00,'2024-01-01',1,NULL,NULL,1,4,2,1,1,1,NULL,NULL,NULL,'0771000006','tharindu6@idealpay.com','No 60','Park Lane','Negombo','Gampaha',1,'Rashmi Peris','No 60 Park Lane','0779000006',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(7,'EMP007','Ashan','Fernando','1995-05-17','951234573V','Y','Support engineer','Ashan Fernando','EPF007','ETF007',67000.00,'2023-07-10',1,NULL,NULL,1,1,3,2,2,1,NULL,NULL,NULL,'0771000007','ashan7@idealpay.com','No 70','Sea Road','Kalutara','Kalutara',1,'Nadeesha Fernando','No 70 Sea Road','0779000007',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(8,'EMP008','Dilshan','Gunawardena','1990-08-23','901234574V','Y','Marketing executive','Dilshan Gunawardena','EPF008','ETF008',81000.00,'2021-11-15',2,NULL,NULL,1,5,6,3,2,1,NULL,NULL,NULL,'0771000008','dilshan8@idealpay.com','No 80','Market Street','Jaffna','Jaffna',1,'Chathuri Gunawardena','No 80 Market Street','0779000008',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(9,'EMP009','Charith','Silva','1989-06-10','891234575V','Y','Sales executive','Charith Silva','EPF009','ETF009',76000.00,'2022-04-18',1,NULL,NULL,1,5,6,2,1,1,NULL,NULL,NULL,'0771000009','charith9@idealpay.com','No 90','Hospital Road','Badulla','Badulla',1,'Piumi Silva','No 90 Hospital Road','0779000009',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(10,'EMP010','Kasun','Madushanka','1994-04-09','941234576V','Y','Junior accountant','Kasun Madushanka','EPF010','ETF010',69000.00,'2023-09-20',1,NULL,NULL,1,3,4,1,1,1,NULL,NULL,NULL,'0771000010','kasun10@idealpay.com','No 100','River Road','Anuradhapura','Anuradhapura',1,'Sanduni Madushanka','No 100 River Road','0779000010',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(11,'EMP011','Isuru','Perera','1991-10-14','911234577V','Y','Warehouse staff','Isuru Perera','EPF011','ETF011',64000.00,'2022-05-11',1,NULL,NULL,1,4,2,3,1,1,NULL,NULL,NULL,'0771000011','isuru11@idealpay.com','No 11','Hill Street','Ratnapura','Ratnapura',1,'Nilmini Perera','No 11 Hill Street','0779000011',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(12,'EMP012','Ravindu','Silva','1988-02-27','881234578V','Y','System admin','Ravindu Silva','EPF012','ETF012',120000.00,'2018-01-15',2,NULL,NULL,1,1,1,1,3,1,NULL,NULL,NULL,'0771000012','ravindu12@idealpay.com','No 12','Palm Avenue','Colombo','Colombo',1,'Sachini Silva','No 12 Palm Avenue','0779000012',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(13,'EMP013','Nuwan','Fernando','1996-12-01','961234579V','Y','Support staff','Nuwan Fernando','EPF013','ETF013',58000.00,'2024-03-01',1,NULL,NULL,1,7,7,2,1,1,NULL,NULL,NULL,'0771000013','nuwan13@idealpay.com','No 13','Church Road','Panadura','Kalutara',1,'Maleesha Fernando','No 13 Church Road','0779000013',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(14,'EMP014','Sachin','Peris','1992-01-08','921234580V','Y','Developer','Sachin Peris','EPF014','ETF014',98000.00,'2021-06-16',1,NULL,NULL,1,1,3,1,2,1,NULL,NULL,NULL,'0771000014','sachin14@idealpay.com','No 14','Green Road','Moratuwa','Colombo',1,'Yasasvi Peris','No 14 Green Road','0779000014',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(15,'EMP015','Lahiru','Jayasuriya','1993-07-07','931234581V','Y','Analyst','Lahiru Jayasuriya','EPF015','ETF015',83000.00,'2020-12-10',1,NULL,NULL,1,3,4,2,2,1,NULL,NULL,NULL,'0771000015','lahiru15@idealpay.com','No 15','Canal Road','Hambantota','Hambantota',1,'Harini Jayasuriya','No 15 Canal Road','0779000015',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(16,'EMP016','Prabath','Fernando','1987-11-03','871234582V','Y','Manager','Prabath Fernando','EPF016','ETF016',140000.00,'2017-09-01',2,NULL,NULL,1,4,1,1,3,1,NULL,NULL,NULL,'0771000016','prabath16@idealpay.com','No 16','Sunset Road','Colombo','Colombo',1,'Dilini Fernando','No 16 Sunset Road','0779000016',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(17,'EMP017','Roshan','Perera','1995-09-29','951234583V','Y','Coordinator','Roshan Perera','EPF017','ETF017',72000.00,'2023-01-05',1,NULL,NULL,1,2,5,3,1,1,NULL,NULL,NULL,'0771000017','roshan17@idealpay.com','No 17','Temple Lane','Kegalle','Kegalle',1,'Pabasara Perera','No 17 Temple Lane','0779000017',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(18,'EMP018','Madhawa','Silva','1994-06-18','941234584V','Y','Assistant','Madhawa Silva','EPF018','ETF018',61000.00,'2022-08-20',1,NULL,NULL,1,7,7,2,1,1,NULL,NULL,NULL,'0771000018','madhawa18@idealpay.com','No 18','Cross Street','Trincomalee','Trincomalee',1,'Ruwini Silva','No 18 Cross Street','0779000018',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(19,'EMP019','Danushka','Dias','1990-03-13','901234585V','Y','Executive','Danushka Dias','EPF019','ETF019',89000.00,'2021-10-11',2,NULL,NULL,1,5,6,1,2,1,NULL,NULL,NULL,'0771000019','danushka19@idealpay.com','No 19','Lake View','Batticaloa','Batticaloa',1,'Pavithra Dias','No 19 Lake View','0779000019',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(20,'EMP020','Shehan','Fernando','1989-08-08','891234586V','Y','Senior Developer','Shehan Fernando','EPF020','ETF020',135000.00,'2019-04-01',2,NULL,NULL,1,1,1,1,3,1,NULL,NULL,NULL,'0771000020','shehan20@idealpay.com','No 20','Marine Drive','Colombo','Colombo',1,'Keshani Fernando','No 20 Marine Drive','0779000020',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(21,'EMP021','Ayesh','Perera','1991-12-24','911234587V','Y','QA Engineer','Ayesh Perera','EPF021','ETF021',87000.00,'2020-06-21',1,NULL,NULL,1,1,3,2,2,1,NULL,NULL,NULL,'0771000021','ayesh21@idealpay.com','No 21','Railway Road','Gampaha','Gampaha',1,'Thilini Perera','No 21 Railway Road','0779000021',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(22,'EMP022','Kavindu','Silva','1996-05-14','961234588V','Y','Support Officer','Kavindu Silva','EPF022','ETF022',55000.00,'2024-02-12',1,NULL,NULL,1,7,7,3,1,1,NULL,NULL,NULL,'0771000022','kavindu22@idealpay.com','No 22','Hill Road','Matale','Matale',1,'Shenali Silva','No 22 Hill Road','0779000022',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(23,'EMP023','Pasindu','Fernando','1993-04-02','931234589V','Y','Operations Executive','Pasindu Fernando','EPF023','ETF023',79000.00,'2021-09-15',1,NULL,NULL,1,4,2,1,2,1,NULL,NULL,NULL,'0771000023','pasindu23@idealpay.com','No 23','Main Avenue','Nuwara Eliya','Nuwara Eliya',1,'Dinithi Fernando','No 23 Main Avenue','0779000023',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(24,'EMP024','Thilina','Jayawardena','1992-07-20','921234590V','Y','Sales Manager','Thilina Jayawardena','EPF024','ETF024',115000.00,'2018-11-05',2,NULL,NULL,1,5,6,2,3,1,NULL,NULL,NULL,'0771000024','thilina24@idealpay.com','No 24','Queens Road','Kurunegala','Kurunegala',1,'Hashini Jayawardena','No 24 Queens Road','0779000024',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(25,'EMP025','Vishwa','Gunasekara','1990-10-10','901234591V','Y','HR Manager','Vishwa Gunasekara','EPF025','ETF025',125000.00,'2017-07-17',2,NULL,NULL,1,2,5,1,3,1,NULL,NULL,NULL,'0771000025','vishwa25@idealpay.com','No 25','Flower Garden','Colombo','Colombo',1,'Rashika Gunasekara','No 25 Flower Garden','0779000025',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26');
+INSERT INTO `employee` VALUES (-1,'DEFAULT','System','Employee',NULL,NULL,'Y','Default Record','System Employee','N/A','N/A',0.00,'2026-05-17',-1,NULL,NULL,-1,-1,-1,-1,-1,-1,NULL,NULL,NULL,'0000000000','system@local','N/A','N/A','N/A','N/A',-1,'N/A','N/A','N/A',-1,'2026-05-17 12:34:46',-1,'2026-05-28 05:30:53'),(1,'EMP001','John','Fernando','1990-01-15','901234567V','Y','Active employee','John Fernando','EPF001','ETF001',85000.00,'2022-01-10',1,NULL,NULL,1,1,1,1,1,3,NULL,NULL,NULL,'0771000001','john1@idealpay.com','No 10','Main Street','Colombo','Colombo',1,'Mary Fernando','No 10 Main Street','0779000001',1,'2026-05-20 02:28:27',1,'2026-05-29 01:50:08'),(2,'EMP002','Kamal','Perera','1988-03-21','881234568V','Y','Senior staff','Kamal Perera','EPF002','ETF002',95000.00,'2021-05-12',2,'2026-05-01','2026-05-28',1,2,2,2,2,1,NULL,NULL,NULL,'0771000002','kamal2@idealpay.com','No 20','Lake Road','Kandy','Kandy',1,'Nimali Perera','No 20 Lake Road','0779000002',1,'2026-05-20 02:28:27',1,'2026-05-28 18:00:09'),(3,'EMP003','Nimal','Silva','1992-07-11','921234569V','Y','IT employee','Nimal Silva','EPF003','ETF003',78000.00,'2023-02-01',1,NULL,NULL,2,1,3,1,1,1,NULL,NULL,NULL,'0771000003','nimal3@idealpay.com','No 30','Temple Road','Galle','Galle',1,'Suneth Silva','No 30 Temple Road','0779000003',1,'2026-05-20 02:28:27',1,'2026-05-31 20:07:58'),(4,'EMP004','Saman','Jayasinghe','1991-09-19','911234570V','Y','Finance staff','Saman Jayasinghe','EPF004','ETF004',88000.00,'2020-03-14',2,NULL,NULL,1,3,4,2,2,1,NULL,NULL,NULL,'0771000004','saman4@idealpay.com','No 40','Flower Road','Kurunegala','Kurunegala',1,'Anoma Jayasinghe','No 40 Flower Road','0779000004',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(5,'EMP005','Ruwan','Dias','1987-12-05','871234571V','Y','HR Executive','Ruwan Dias','EPF005','ETF005',92000.00,'2019-08-22',2,NULL,NULL,3,2,5,3,3,1,NULL,NULL,NULL,'0771000005','ruwan5@idealpay.com','No 50','Station Road','Matara','Matara',1,'Kumari Dias','No 50 Station Road','0779000005',1,'2026-05-20 02:28:27',1,'2026-05-31 20:07:58'),(6,'EMP006','Tharindu','Peris','1993-11-12','931234572V','Y','Operations staff','Tharindu Peris','EPF006','ETF006',73000.00,'2024-01-01',1,NULL,NULL,1,4,2,1,1,1,NULL,NULL,NULL,'0771000006','tharindu6@idealpay.com','No 60','Park Lane','Negombo','Gampaha',1,'Rashmi Peris','No 60 Park Lane','0779000006',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(7,'EMP007','Ashan','Fernando','1995-05-17','951234573V','Y','Support engineer','Ashan Fernando','EPF007','ETF007',67000.00,'2023-07-10',1,NULL,NULL,1,1,3,2,2,1,NULL,NULL,NULL,'0771000007','ashan7@idealpay.com','No 70','Sea Road','Kalutara','Kalutara',1,'Nadeesha Fernando','No 70 Sea Road','0779000007',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(8,'EMP008','Dilshan','Gunawardena','1990-08-23','901234574V','Y','Marketing executive','Dilshan Gunawardena','EPF008','ETF008',81000.00,'2021-11-15',2,NULL,NULL,1,5,6,3,2,1,NULL,NULL,NULL,'0771000008','dilshan8@idealpay.com','No 80','Market Street','Jaffna','Jaffna',1,'Chathuri Gunawardena','No 80 Market Street','0779000008',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(9,'EMP009','Charith','Silva','1989-06-10','891234575V','Y','Sales executive','Charith Silva','EPF009','ETF009',76000.00,'2022-04-18',1,NULL,NULL,1,5,6,2,1,1,NULL,NULL,NULL,'0771000009','charith9@idealpay.com','No 90','Hospital Road','Badulla','Badulla',1,'Piumi Silva','No 90 Hospital Road','0779000009',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(10,'EMP010','Kasun','Madushanka','1994-04-09','941234576V','Y','Junior accountant','Kasun Madushanka','EPF010','ETF010',69000.00,'2023-09-20',1,NULL,NULL,1,3,4,1,1,1,NULL,NULL,NULL,'0771000010','kasun10@idealpay.com','No 100','River Road','Anuradhapura','Anuradhapura',1,'Sanduni Madushanka','No 100 River Road','0779000010',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(11,'EMP011','Isuru','Perera','1991-10-14','911234577V','Y','Warehouse staff','Isuru Perera','EPF011','ETF011',64000.00,'2022-05-11',1,NULL,NULL,1,4,2,3,1,1,NULL,NULL,NULL,'0771000011','isuru11@idealpay.com','No 11','Hill Street','Ratnapura','Ratnapura',1,'Nilmini Perera','No 11 Hill Street','0779000011',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(12,'EMP012','Ravindu','Silva','1988-02-27','881234578V','Y','System admin','Ravindu Silva','EPF012','ETF012',120000.00,'2018-01-15',2,NULL,NULL,1,1,1,1,3,1,NULL,NULL,NULL,'0771000012','ravindu12@idealpay.com','No 12','Palm Avenue','Colombo','Colombo',1,'Sachini Silva','No 12 Palm Avenue','0779000012',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(13,'EMP013','Nuwan','Fernando','1996-12-01','961234579V','Y','Support staff','Nuwan Fernando','EPF013','ETF013',58000.00,'2024-03-01',1,NULL,NULL,1,7,7,2,1,1,NULL,NULL,NULL,'0771000013','nuwan13@idealpay.com','No 13','Church Road','Panadura','Kalutara',1,'Maleesha Fernando','No 13 Church Road','0779000013',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(14,'EMP014','Sachin','Peris','1992-01-08','921234580V','Y','Developer','Sachin Peris','EPF014','ETF014',98000.00,'2021-06-16',1,NULL,NULL,1,1,3,1,2,1,NULL,NULL,NULL,'0771000014','sachin14@idealpay.com','No 14','Green Road','Moratuwa','Colombo',1,'Yasasvi Peris','No 14 Green Road','0779000014',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(15,'EMP015','Lahiru','Jayasuriya','1993-07-07','931234581V','Y','Analyst','Lahiru Jayasuriya','EPF015','ETF015',83000.00,'2020-12-10',1,NULL,NULL,1,3,4,2,2,1,NULL,NULL,NULL,'0771000015','lahiru15@idealpay.com','No 15','Canal Road','Hambantota','Hambantota',1,'Harini Jayasuriya','No 15 Canal Road','0779000015',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(16,'EMP016','Prabath','Fernando','1987-11-03','871234582V','Y','Manager','Prabath Fernando','EPF016','ETF016',140000.00,'2017-09-01',2,NULL,NULL,1,4,1,1,3,1,NULL,NULL,NULL,'0771000016','prabath16@idealpay.com','No 16','Sunset Road','Colombo','Colombo',1,'Dilini Fernando','No 16 Sunset Road','0779000016',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(17,'EMP017','Roshan','Perera','1995-09-29','951234583V','Y','Coordinator','Roshan Perera','EPF017','ETF017',72000.00,'2023-01-05',1,NULL,NULL,1,2,5,3,1,1,NULL,NULL,NULL,'0771000017','roshan17@idealpay.com','No 17','Temple Lane','Kegalle','Kegalle',1,'Pabasara Perera','No 17 Temple Lane','0779000017',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(18,'EMP018','Madhawa','Silva','1994-06-18','941234584V','Y','Assistant','Madhawa Silva','EPF018','ETF018',61000.00,'2022-08-20',1,NULL,NULL,1,7,7,2,1,1,NULL,NULL,NULL,'0771000018','madhawa18@idealpay.com','No 18','Cross Street','Trincomalee','Trincomalee',1,'Ruwini Silva','No 18 Cross Street','0779000018',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(19,'EMP019','Danushka','Dias','1990-03-13','901234585V','Y','Executive','Danushka Dias','EPF019','ETF019',89000.00,'2021-10-11',2,NULL,NULL,1,5,6,1,2,1,NULL,NULL,NULL,'0771000019','danushka19@idealpay.com','No 19','Lake View','Batticaloa','Batticaloa',1,'Pavithra Dias','No 19 Lake View','0779000019',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(20,'EMP020','Shehan','Fernando','1989-08-08','891234586V','Y','Senior Developer','Shehan Fernando','EPF020','ETF020',135000.00,'2019-04-01',2,NULL,NULL,1,1,1,1,3,1,NULL,NULL,NULL,'0771000020','shehan20@idealpay.com','No 20','Marine Drive','Colombo','Colombo',1,'Keshani Fernando','No 20 Marine Drive','0779000020',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(21,'EMP021','Ayesh','Perera','1991-12-24','911234587V','Y','QA Engineer','Ayesh Perera','EPF021','ETF021',87000.00,'2020-06-21',1,NULL,NULL,1,1,3,2,2,1,NULL,NULL,NULL,'0771000021','ayesh21@idealpay.com','No 21','Railway Road','Gampaha','Gampaha',1,'Thilini Perera','No 21 Railway Road','0779000021',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(22,'EMP022','Kavindu','Silva','1996-05-14','961234588V','Y','Support Officer','Kavindu Silva','EPF022','ETF022',55000.00,'2024-02-12',1,NULL,NULL,1,7,7,3,1,1,NULL,NULL,NULL,'0771000022','kavindu22@idealpay.com','No 22','Hill Road','Matale','Matale',1,'Shenali Silva','No 22 Hill Road','0779000022',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(23,'EMP023','Pasindu','Fernando','1993-04-02','931234589V','Y','Operations Executive','Pasindu Fernando','EPF023','ETF023',79000.00,'2021-09-15',1,NULL,NULL,1,4,2,1,2,1,NULL,NULL,NULL,'0771000023','pasindu23@idealpay.com','No 23','Main Avenue','Nuwara Eliya','Nuwara Eliya',1,'Dinithi Fernando','No 23 Main Avenue','0779000023',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(24,'EMP024','Thilina','Jayawardena','1992-07-20','921234590V','Y','Sales Manager','Thilina Jayawardena','EPF024','ETF024',115000.00,'2018-11-05',2,NULL,NULL,1,5,6,2,3,1,NULL,NULL,NULL,'0771000024','thilina24@idealpay.com','No 24','Queens Road','Kurunegala','Kurunegala',1,'Hashini Jayawardena','No 24 Queens Road','0779000024',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(25,'EMP025','Vishwa','Gunasekara','1990-10-10','901234591V','Y','HR Manager','Vishwa Gunasekara','EPF025','ETF025',125000.00,'2017-07-17',2,NULL,NULL,1,2,5,1,3,1,NULL,NULL,NULL,'0771000025','vishwa25@idealpay.com','No 25','Flower Garden','Colombo','Colombo',1,'Rashika Gunasekara','No 25 Flower Garden','0779000025',1,'2026-05-20 02:28:27',1,'2026-05-28 05:30:26'),(26,'12334','Jezeem','Aymen','2026-05-01','1234567','Y',NULL,'Noohulebbe jezeem Aymen','123','1234',25000.00,'2026-05-28',1,NULL,NULL,1,1,1,1,1,1,NULL,NULL,NULL,NULL,'jzmamn@gmail.com',NULL,NULL,NULL,NULL,130,NULL,NULL,NULL,1,'2026-05-29 02:16:28',1,'2026-05-29 02:16:28');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -823,6 +966,7 @@ CREATE TABLE `nopay_days` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `code` varchar(10) DEFAULT NULL,
   `name` varchar(150) NOT NULL,
+  `days` decimal(5,2) DEFAULT '0.00',
   `is_active` char(1) NOT NULL DEFAULT 'Y',
   `description` varchar(255) NOT NULL,
   `created_by` bigint NOT NULL,
@@ -836,7 +980,7 @@ CREATE TABLE `nopay_days` (
   KEY `fk_nopay_days_modified_by` (`modified_by`),
   CONSTRAINT `fk_nopay_days_created_by` FOREIGN KEY (`created_by`) REFERENCES `usr` (`id`),
   CONSTRAINT `fk_nopay_days_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `usr` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -845,7 +989,7 @@ CREATE TABLE `nopay_days` (
 
 LOCK TABLES `nopay_days` WRITE;
 /*!40000 ALTER TABLE `nopay_days` DISABLE KEYS */;
-INSERT INTO `nopay_days` VALUES (-1,'DEFAULT','Default NoPay','Y','System Default NoPay Rule',-1,'2026-05-17 12:34:46',-1,'2026-05-17 12:34:46'),(1,'NP001','No Pay - Default','Y','Default no pay rule',1,'2026-05-17 14:21:45',1,'2026-05-17 14:21:45'),(2,'NP002','Half Day Deduction','Y','Deduct 0.5 day per absence',1,'2026-05-17 14:21:45',1,'2026-05-17 14:21:45'),(3,'NP003','Full Day Deduction','Y','Deduct 1 full day',1,'2026-05-17 14:21:45',1,'2026-05-17 14:21:45'),(4,'NP004','Late Mark Deduction','Y','Penalty for late arrival',1,'2026-05-17 14:21:45',1,'2026-05-17 14:21:45'),(5,'NP005','Early Leave Deduction','Y','Deduction for early leave',1,'2026-05-17 14:21:45',1,'2026-05-17 14:21:45'),(6,'NP006','Unpaid Leave','Y','Unpaid leave rule',1,'2026-05-17 14:21:45',1,'2026-05-17 14:21:45'),(7,'NP007','Absence Penalty','Y','Absence deduction rule',1,'2026-05-17 14:21:45',1,'2026-05-17 14:21:45'),(8,'NP008','Disciplinary Leave','N','Disciplinary no pay rule',1,'2026-05-17 14:21:45',1,'2026-05-19 00:35:31'),(9,'NP009','No Pay Holiday','Y','Holiday without pay rule',1,'2026-05-17 14:21:45',1,'2026-05-17 14:21:45'),(10,'NP010','Suspension','Y','Suspension no pay rule',1,'2026-05-17 14:21:45',1,'2026-05-17 14:21:45'),(11,'NP011','Custom Rule','N','Custom no pay configuration',1,'2026-05-17 14:21:45',1,'2026-05-27 00:45:07'),(12,'NPD_12','Test 0001','Y','casual',1,'2026-05-27 00:43:49',1,'2026-05-27 00:44:08');
+INSERT INTO `nopay_days` VALUES (-1,'SYS','System Default',0.00,'N','System default no-pay configuration',-1,'2026-05-29 04:40:30',-1,'2026-05-29 04:40:30'),(1,'NP001','Half Day No Pay',25.00,'Y','Half-day salary deduction',-1,'2026-05-29 04:40:30',-1,'2026-05-29 04:40:30'),(2,'NP002','Full Day No Pay',26.00,'Y','Full-day salary deduction',-1,'2026-05-29 04:40:30',-1,'2026-05-29 04:40:30'),(3,'NP003','Late Attendance No Pay',30.00,'Y','Quarter-day no-pay deduction for late attendance',-1,'2026-05-29 04:40:30',-1,'2026-05-29 04:40:30');
 /*!40000 ALTER TABLE `nopay_days` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1134,92 +1278,6 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'ideal_pay'
 --
-/*!50003 DROP PROCEDURE IF EXISTS `sp_employee_fixed_allowance_pivot` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_employee_fixed_allowance_pivot`(
-    IN p_payroll_month VARCHAR(20)
-)
-BEGIN
-
-    SET SESSION group_concat_max_len = 1000000;
-
-    SET @columns = NULL;
-    SET @sql = NULL;
-
-    /*
-        Generate dynamic pivot columns
-    */
-    SELECT
-        GROUP_CONCAT(
-            DISTINCT CONCAT(
-                'SUM(CASE WHEN fa.id = ',
-                fa.id,
-                ' THEN ef.amount ELSE 0 END) AS `',
-                REPLACE(REPLACE(fa.name, ' ', '_'), '`', ''),
-                '`'
-            )
-            ORDER BY fa.id
-            SEPARATOR ', '
-        )
-    INTO @columns
-    FROM fixed_allowance fa
-    WHERE fa.is_active = 'Y';
-
-    /*
-        Build query
-    */
-    SET @sql = CONCAT(
-    '
-    SELECT
-        e.id,
-        e.employee_no,
-        e.payroll_name,
-        e.basic_salary,
-        ',
-        @columns,
-    '
-
-    FROM employee e
-
-    LEFT JOIN emp_fa ef
-        ON e.id = ef.emp_id
-        AND ef.payroll_month = ''',
-        p_payroll_month,
-    '''
-
-    LEFT JOIN fixed_allowance fa
-        ON ef.fa_id = fa.id
-
-    WHERE e.is_active = ''Y''
-
-    GROUP BY
-        e.id,
-        e.employee_no,
-        e.payroll_name,
-        e.basic_salary
-
-    ORDER BY e.id
-    '
-    );
-
-    PREPARE stmt FROM @sql;
-    EXECUTE stmt;
-    DEALLOCATE PREPARE stmt;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_emp_fa_pivot` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1230,76 +1288,32 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_fa_pivot`(
-    IN p_payroll_month VARCHAR(20)
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_fa_pivot`(IN p_payroll_month VARCHAR(20))
 BEGIN
-
+    DECLARE v_columns LONGTEXT DEFAULT '';
+    DECLARE v_sql     LONGTEXT DEFAULT '';
     SET SESSION group_concat_max_len = 1000000;
-
-    SET @columns = NULL;
-    SET @sql = NULL;
-
-    /*
-        Generate dynamic pivot columns
-    */
-    SELECT
-        GROUP_CONCAT(
-            DISTINCT CONCAT(
-                'SUM(CASE WHEN fa.id = ',
-                fa.id,
-                ' THEN ef.amount ELSE 0 END) AS `',
-                REPLACE(REPLACE(fa.name, ' ', '_'), '`', ''),
-                '`'
-            )
-            ORDER BY fa.id
-            SEPARATOR ', '
-        )
-    INTO @columns
-    FROM fixed_allowance fa
-    WHERE fa.is_active = 'Y';
-
-    /*
-        Build query
-    */
-    SET @sql = CONCAT(
-    '
-    SELECT
-        e.id,
-        e.employee_no,
-        e.payroll_name,
-        e.basic_salary,
-        ',
-        @columns,
-    '
-
-    FROM employee e
-
-    LEFT JOIN emp_fa ef
-        ON e.id = ef.emp_id
-        AND ef.payroll_month = ''',
-        p_payroll_month,
-    '''
-
-    LEFT JOIN fixed_allowance fa
-        ON ef.fa_id = fa.id
-
-    WHERE e.is_active = ''Y''
-
-    GROUP BY
-        e.id,
-        e.employee_no,
-        e.payroll_name,
-        e.basic_salary
-
-    ORDER BY e.id
-    '
+    SELECT GROUP_CONCAT(
+        DISTINCT CONCAT(
+            'SUM(CASE WHEN fa.id = ', fa.id,
+            ' THEN IFNULL(ef.amount, 0) ELSE 0 END) AS `', fa.code, '`, ',
+            '''', REPLACE(REPLACE(fa.name, '''', ''''''), '`', ''), ''' AS `', fa.code, '_label`'
+        ) ORDER BY fa.id SEPARATOR ', '
+    ) INTO v_columns FROM fixed_allowance fa WHERE fa.is_active = 'Y' AND fa.id > 0;
+    IF v_columns IS NULL OR v_columns = '' THEN
+        SET v_columns = '0 AS no_active_components, NULL AS no_active_components_label';
+    END IF;
+    SET v_sql = CONCAT(
+        'SELECT e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary, ',
+        v_columns,
+        ' FROM employee e
+        LEFT JOIN emp_fa ef ON e.id = ef.emp_id AND ef.payroll_month = ''', p_payroll_month, '''
+        LEFT JOIN fixed_allowance fa ON ef.fa_id = fa.id
+        WHERE e.is_active = ''Y'' AND e.id > 0
+        GROUP BY e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary
+        ORDER BY e.id'
     );
-
-    PREPARE stmt FROM @sql;
-    EXECUTE stmt;
-    DEALLOCATE PREPARE stmt;
-
+    SET @stmt = v_sql; PREPARE stmt FROM @stmt; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1316,71 +1330,32 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_fd_pivot`(
-    IN p_payroll_month VARCHAR(20)
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_fd_pivot`(IN p_payroll_month VARCHAR(20))
 BEGIN
-
     DECLARE v_columns LONGTEXT DEFAULT '';
-    DECLARE v_sql LONGTEXT DEFAULT '';
-
+    DECLARE v_sql     LONGTEXT DEFAULT '';
     SET SESSION group_concat_max_len = 1000000;
-
     SELECT GROUP_CONCAT(
         DISTINCT CONCAT(
-            'SUM(CASE WHEN fd.id = ',
-            fd.id,
-            ' THEN IFNULL(efd.amount,0) ELSE 0 END) AS `',
-            REPLACE(REPLACE(fd.name, ' ', '_'), '`', ''),
-            '`'
-        )
-        ORDER BY fd.id
-        SEPARATOR ', '
-    )
-    INTO v_columns
-    FROM fixed_deduction fd
-    WHERE fd.is_active = 'Y';
-
-    IF v_columns IS NULL THEN
-        SET v_columns = '';
+            'SUM(CASE WHEN fd.id = ', fd.id,
+            ' THEN IFNULL(efd.amount, 0) ELSE 0 END) AS `', fd.code, '`, ',
+            '''', REPLACE(REPLACE(fd.name, '''', ''''''), '`', ''), ''' AS `', fd.code, '_label`'
+        ) ORDER BY fd.id SEPARATOR ', '
+    ) INTO v_columns FROM fixed_deduction fd WHERE fd.is_active = 'Y' AND fd.id > 0;
+    IF v_columns IS NULL OR v_columns = '' THEN
+        SET v_columns = '0 AS no_active_components, NULL AS no_active_components_label';
     END IF;
-
     SET v_sql = CONCAT(
-        'SELECT
-            e.id,
-            e.employee_no,
-            e.first_name,
-            e.last_name,
-            e.payroll_name',
-
-        IF(v_columns <> '', CONCAT(', ', v_columns), ''),
-
+        'SELECT e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary, ',
+        v_columns,
         ' FROM employee e
-
-        LEFT JOIN emp_fd efd
-            ON e.id = efd.emp_id
-            AND efd.payroll_month = ''', p_payroll_month, '''
-
-        LEFT JOIN fixed_deduction fd
-            ON efd.fd_id = fd.id
-
-        WHERE e.is_active = ''Y''
-
-        GROUP BY
-            e.id,
-            e.employee_no,
-            e.first_name,
-            e.last_name,
-            e.payroll_name
-
+        LEFT JOIN emp_fd efd ON e.id = efd.emp_id AND efd.payroll_month = ''', p_payroll_month, '''
+        LEFT JOIN fixed_deduction fd ON efd.fd_id = fd.id
+        WHERE e.is_active = ''Y'' AND e.id > 0
+        GROUP BY e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary
         ORDER BY e.id'
     );
-
-    SET @stmt = v_sql;
-    PREPARE stmt FROM @stmt;
-    EXECUTE stmt;
-    DEALLOCATE PREPARE stmt;
-
+    SET @stmt = v_sql; PREPARE stmt FROM @stmt; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1397,38 +1372,28 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_np_pivot`(
-    IN p_payroll_month VARCHAR(20)
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_np_pivot`(IN p_payroll_month VARCHAR(20))
 BEGIN
-
     SELECT
         e.id,
         e.employee_no,
         e.first_name,
         e.last_name,
         e.payroll_name,
-
-        SUM(IFNULL(enp.days,0)) AS total_days,
-        SUM(IFNULL(enp.amount,0)) AS total_amount
-
+        e.basic_salary,
+        nd_emp.name  AS nopay_rule,
+        nd_emp.days  AS nopay_rule_days,
+        nd_enp.code  AS nopay_code,
+        enp.days     AS days,
+        enp.amount   AS amount
     FROM employee e
-
-    LEFT JOIN emp_np enp
-        ON e.id = enp.emp_id
-        AND enp.payroll_month = p_payroll_month
-
+    LEFT JOIN emp_np     enp     ON e.id            = enp.emp_id
+                                 AND enp.payroll_month = p_payroll_month
+    LEFT JOIN nopay_days nd_enp  ON enp.nopay_id    = nd_enp.id
+    LEFT JOIN nopay_days nd_emp  ON e.nopay_days_id = nd_emp.id
     WHERE e.is_active = 'Y'
-
-    GROUP BY
-        e.id,
-        e.employee_no,
-        e.first_name,
-        e.last_name,
-        e.payroll_name
-
+      AND e.id > 0
     ORDER BY e.id;
-
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1445,38 +1410,32 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_ot_pivot`(
-    IN p_payroll_month VARCHAR(20)
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_ot_pivot`(IN p_payroll_month VARCHAR(20))
 BEGIN
-
-    SELECT
-        e.id,
-        e.employee_no,
-        e.first_name,
-        e.last_name,
-        e.payroll_name,
-
-        SUM(IFNULL(eot.hours,0)) AS total_hours,
-        SUM(IFNULL(eot.amount,0)) AS total_amount
-
-    FROM employee e
-
-    LEFT JOIN emp_ot eot
-        ON e.id = eot.emp_id
-        AND eot.payroll_month = p_payroll_month
-
-    WHERE e.is_active = 'Y'
-
-    GROUP BY
-        e.id,
-        e.employee_no,
-        e.first_name,
-        e.last_name,
-        e.payroll_name
-
-    ORDER BY e.id;
-
+    DECLARE v_columns LONGTEXT DEFAULT '';
+    DECLARE v_sql     LONGTEXT DEFAULT '';
+    SET SESSION group_concat_max_len = 1000000;
+    SELECT GROUP_CONCAT(
+        DISTINCT CONCAT(
+            'SUM(CASE WHEN ot.id = ', ot.id, ' THEN IFNULL(eot.hours,  0) ELSE 0 END) AS `', ot.code, '_hours`, ',
+            'SUM(CASE WHEN ot.id = ', ot.id, ' THEN IFNULL(eot.amount, 0) ELSE 0 END) AS `', ot.code, '_amount`, ',
+            '''', REPLACE(REPLACE(ot.name, '''', ''''''), '`', ''), ''' AS `', ot.code, '_label`'
+        ) ORDER BY ot.id SEPARATOR ', '
+    ) INTO v_columns FROM overtime ot WHERE ot.is_active = 'Y' AND ot.id > 0;
+    IF v_columns IS NULL OR v_columns = '' THEN
+        SET v_columns = '0 AS no_active_components, 0 AS no_active_components_amount, NULL AS no_active_components_label';
+    END IF;
+    SET v_sql = CONCAT(
+        'SELECT e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary, ',
+        v_columns,
+        ' FROM employee e
+        LEFT JOIN emp_ot eot ON e.id = eot.emp_id AND eot.payroll_month = ''', p_payroll_month, '''
+        LEFT JOIN overtime ot ON eot.overtime_id = ot.id
+        WHERE e.is_active = ''Y'' AND e.id > 0
+        GROUP BY e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary
+        ORDER BY e.id'
+    );
+    SET @stmt = v_sql; PREPARE stmt FROM @stmt; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1493,82 +1452,32 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_va_pivot`(
-    IN p_payroll_month VARCHAR(20)
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_va_pivot`(IN p_payroll_month VARCHAR(20))
 BEGIN
-
     DECLARE v_columns LONGTEXT DEFAULT '';
-    DECLARE v_sql LONGTEXT DEFAULT '';
-
+    DECLARE v_sql     LONGTEXT DEFAULT '';
     SET SESSION group_concat_max_len = 1000000;
-
-    /* =========================
-       Build dynamic columns
-    ========================= */
     SELECT GROUP_CONCAT(
         DISTINCT CONCAT(
-            'SUM(CASE WHEN va.id = ',
-            va.id,
-            ' THEN IFNULL(eva.amount,0) ELSE 0 END) AS `',
-            REPLACE(REPLACE(va.name, ' ', '_'), '`', ''),
-            '`'
-        )
-        ORDER BY va.id
-        SEPARATOR ', '
-    )
-    INTO v_columns
-    FROM variable_allowance va
-    WHERE va.is_active = 'Y';
-
-    /* Prevent NULL crash */
-    IF v_columns IS NULL THEN
-        SET v_columns = '';
+            'SUM(CASE WHEN va.id = ', va.id,
+            ' THEN IFNULL(eva.amount, 0) ELSE 0 END) AS `', va.code, '`, ',
+            '''', REPLACE(REPLACE(va.name, '''', ''''''), '`', ''), ''' AS `', va.code, '_label`'
+        ) ORDER BY va.id SEPARATOR ', '
+    ) INTO v_columns FROM variable_allowance va WHERE va.is_active = 'Y' AND va.id > 0;
+    IF v_columns IS NULL OR v_columns = '' THEN
+        SET v_columns = '0 AS no_active_components, NULL AS no_active_components_label';
     END IF;
-
-    /* =========================
-       Build final SQL
-    ========================= */
     SET v_sql = CONCAT(
-        'SELECT
-            e.id,
-            e.employee_no,
-            e.first_name,
-            e.last_name,
-            e.payroll_name',
-            
-            IF(v_columns <> '', CONCAT(', ', v_columns), ''),
-
+        'SELECT e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary, ',
+        v_columns,
         ' FROM employee e
-
-        LEFT JOIN emp_va eva
-            ON e.id = eva.emp_id
-            AND eva.payroll_month = ''', p_payroll_month, '''
-
-        LEFT JOIN variable_allowance va
-            ON eva.va_id = va.id
-
-        WHERE e.is_active = ''Y''
-
-        GROUP BY
-            e.id,
-            e.employee_no,
-            e.first_name,
-            e.last_name,
-            e.payroll_name
-
+        LEFT JOIN emp_va eva ON e.id = eva.emp_id AND eva.payroll_month = ''', p_payroll_month, '''
+        LEFT JOIN variable_allowance va ON eva.va_id = va.id
+        WHERE e.is_active = ''Y'' AND e.id > 0
+        GROUP BY e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary
         ORDER BY e.id'
     );
-
-    /* Debug SQL */
-    SELECT v_sql;
-
-    /* Execute */
-    SET @stmt = v_sql;
-    PREPARE stmt FROM @stmt;
-    EXECUTE stmt;
-    DEALLOCATE PREPARE stmt;
-
+    SET @stmt = v_sql; PREPARE stmt FROM @stmt; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1585,71 +1494,32 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_vd_pivot`(
-    IN p_payroll_month VARCHAR(20)
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_emp_vd_pivot`(IN p_payroll_month VARCHAR(20))
 BEGIN
-
     DECLARE v_columns LONGTEXT DEFAULT '';
-    DECLARE v_sql LONGTEXT DEFAULT '';
-
+    DECLARE v_sql     LONGTEXT DEFAULT '';
     SET SESSION group_concat_max_len = 1000000;
-
     SELECT GROUP_CONCAT(
         DISTINCT CONCAT(
-            'SUM(CASE WHEN vd.id = ',
-            vd.id,
-            ' THEN IFNULL(evd.amount,0) ELSE 0 END) AS `',
-            REPLACE(REPLACE(vd.name, ' ', '_'), '`', ''),
-            '`'
-        )
-        ORDER BY vd.id
-        SEPARATOR ', '
-    )
-    INTO v_columns
-    FROM variable_deduction vd
-    WHERE vd.is_active = 'Y';
-
-    IF v_columns IS NULL THEN
-        SET v_columns = '';
+            'SUM(CASE WHEN vd.id = ', vd.id,
+            ' THEN IFNULL(evd.amount, 0) ELSE 0 END) AS `', vd.code, '`, ',
+            '''', REPLACE(REPLACE(vd.name, '''', ''''''), '`', ''), ''' AS `', vd.code, '_label`'
+        ) ORDER BY vd.id SEPARATOR ', '
+    ) INTO v_columns FROM variable_deduction vd WHERE vd.is_active = 'Y' AND vd.id > 0;
+    IF v_columns IS NULL OR v_columns = '' THEN
+        SET v_columns = '0 AS no_active_components, NULL AS no_active_components_label';
     END IF;
-
     SET v_sql = CONCAT(
-        'SELECT
-            e.id,
-            e.employee_no,
-            e.first_name,
-            e.last_name,
-            e.payroll_name',
-
-        IF(v_columns <> '', CONCAT(', ', v_columns), ''),
-
+        'SELECT e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary, ',
+        v_columns,
         ' FROM employee e
-
-        LEFT JOIN emp_vd evd
-            ON e.id = evd.emp_id
-            AND evd.payroll_month = ''', p_payroll_month, '''
-
-        LEFT JOIN variable_deduction vd
-            ON evd.vd_id = vd.id
-
-        WHERE e.is_active = ''Y''
-
-        GROUP BY
-            e.id,
-            e.employee_no,
-            e.first_name,
-            e.last_name,
-            e.payroll_name
-
+        LEFT JOIN emp_vd evd ON e.id = evd.emp_id AND evd.payroll_month = ''', p_payroll_month, '''
+        LEFT JOIN variable_deduction vd ON evd.vd_id = vd.id
+        WHERE e.is_active = ''Y'' AND e.id > 0
+        GROUP BY e.id, e.employee_no, e.first_name, e.last_name, e.payroll_name, e.basic_salary
         ORDER BY e.id'
     );
-
-    SET @stmt = v_sql;
-    PREPARE stmt FROM @stmt;
-    EXECUTE stmt;
-    DEALLOCATE PREPARE stmt;
-
+    SET @stmt = v_sql; PREPARE stmt FROM @stmt; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2135,4 +2005,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-28 23:32:23
+-- Dump completed on 2026-06-01  5:33:06
