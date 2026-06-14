@@ -3144,7 +3144,7 @@ BEGIN
         -- formula flag from the component master
         CASE rd.component_type
             WHEN 'FA'    THEN COALESCE(fa.formula_enabled,  'N')
-            WHEN 'FD'    THEN COALESCE(fd.formula_enabled,  'N')
+            WHEN 'FD'    THEN CASE WHEN NULLIF(TRIM(fd.formula), '') IS NOT NULL THEN 'Y' ELSE 'N' END
             WHEN 'OT'    THEN COALESCE(ot.formula_enabled,  'N')
             WHEN 'NOPAY' THEN COALESCE(nd.formula_enabled,  'N')
             ELSE 'N'
