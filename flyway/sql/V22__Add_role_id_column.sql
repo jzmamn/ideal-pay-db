@@ -1,2 +1,0 @@
--- ALTER TABLE `usr`
--- ADD COLUMN `company_id` BIGINT DEFAULT NULL AFTER `role_id`;
