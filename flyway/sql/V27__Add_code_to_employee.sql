@@ -1,0 +1,2 @@
+ALTER TABLE `employee`
+    ADD COLUMN `code` VARCHAR(20) NULL UNIQUE AFTER `id`;
